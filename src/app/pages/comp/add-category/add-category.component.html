@@ -1,0 +1,22 @@
+<div class="modal-overlay" (click)="close()"></div> <!-- Background overlay -->
+<div class="add-category-container">
+    <div class="add-category-form">
+        <button class="close-button" (click)="close()">×</button>
+        <h3>Add New Category</h3>
+        <form (ngSubmit)="submitCatagory()">
+            <div>
+                <label for="nameAr"> Catagory Ar Name:</label>
+                <input type="text" id="nameAr" [(ngModel)]="CatagoryData.nameAr" name="nameAr" placeholder="ادخل الاسم" required>
+              </div>
+
+              <div>
+                <label for="nameEn">Catagory En Name:</label>
+                <input type="text" id="nameEn" [(ngModel)]="CatagoryData.nameEn" name="nameEn" placeholder="Enter name" required>
+              </div>
+        
+          <button type="submit">Submit</button>
+          <button type="button" (click)="close()">Close</button>
+        </form>
+        <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
+    </div>
+</div>

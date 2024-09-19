@@ -1,0 +1,129 @@
+/* Styles for the full-page overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Softer overlay for better focus */
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+/* Centered container for the form */
+.add-brand-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 100%;
+    max-width: 500px; /* Slightly smaller for a more focused view */
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transitions */
+}
+
+/* Styles for the form content */
+.add-brand-form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Softer shadow for a clean look */
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: fadeInScale 0.4s ease-in-out; /* Adding fade-in and scale animation */
+}
+
+/* Animation for fade-in and scale */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Close button positioned at the top right of the form */
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #000; /* Darker color on hover */
+}
+
+/* Input fields */
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Subtle glow effect on focus */
+    outline: none;
+}
+
+/* Form buttons */
+button {
+    margin-right: 10px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+button:active {
+    transform: scale(0.98); /* Slight shrink effect on click */
+}
+
+/* Headings */
+h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Label */
+label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Country of Origin - "Other" input field */
+#otherCountry {
+    margin-top: 10px;
+}

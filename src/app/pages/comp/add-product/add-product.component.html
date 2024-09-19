@@ -1,0 +1,114 @@
+<div class="modal-overlay" (click)="close()"></div> <!-- Background overlay -->
+<div class="add-product-container">
+    <div class="add-product-form">
+        <button class="close-button" (click)="close()">×</button>
+        <h3>Add New Product</h3>
+
+        <form (ngSubmit)="submitProduct()">
+            <!-- Product Name in Arabic -->
+            <div>
+                <label for="nameAr">Product Name (AR):</label>
+                <input type="text" id="nameAr" [(ngModel)]="productData.nameAr" name="nameAr" required>
+            </div>
+
+            <!-- Product Name in English -->
+            <div>
+                <label for="nameEn">Product Name (EN):</label>
+                <input type="text" id="nameEn" [(ngModel)]="productData.nameEn" name="nameEn" required>
+            </div>
+
+            <!-- Product Price -->
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" [(ngModel)]="productData.price" name="price" required>
+            </div>
+
+            <!-- Dropdown for Category -->
+            <div>
+                <label for="category">Category:</label>
+                <select id="category" [(ngModel)]="productData.categoryId" name="categoryId" required>
+                    <option *ngFor="let category of Categories" [value]="category.value">{{ category.nameEn }}</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for Brand -->
+            <div>
+                <label for="brand">Brand:</label>
+                <select id="brand" [(ngModel)]="productData.brandId" name="brandId" required>
+                    <option *ngFor="let brand of brands" [value]="brand.value">{{ brand.nameEn }}</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for Material -->
+            <div>
+                <label for="material">Material:</label>
+                <select id="material" [(ngModel)]="productData.materialId" name="materialId" required>
+                    <option *ngFor="let material of Materials" [value]="material.value">{{ material.nameEn }}</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for Style -->
+            <div>
+                <label for="style">Style:</label>
+                <select id="style" [(ngModel)]="productData.styleId" name="styleId" required>
+                    <option *ngFor="let style of Styles" [value]="style.value">{{ style.nameEn }}</option>
+                </select>
+            </div>
+
+            <!-- Description Fields -->
+            <div>
+                <label for="descriptionAr">Description (AR):</label>
+                <textarea id="descriptionAr" [(ngModel)]="productData.descriptionAr" name="descriptionAr"></textarea>
+            </div>
+
+            <div>
+                <label for="descriptionEn">Description (EN):</label>
+                <textarea id="descriptionEn" [(ngModel)]="productData.descriptionEn" name="descriptionEn"></textarea>
+            </div>
+
+            <!-- Product Dimensions -->
+            <div>
+                <label for="height">Height:</label>
+                <input type="number" id="height" [(ngModel)]="productData.height" name="height" required>
+            </div>
+
+            <div>
+                <label for="width">Width:</label>
+                <input type="number" id="width" [(ngModel)]="productData.width" name="width" required>
+            </div>
+
+            <div>
+                <label for="weight">Weight:</label>
+                <input type="number" id="weight" [(ngModel)]="productData.weight" name="weight" required>
+            </div>
+
+            <!-- Image Upload Section -->
+            <div>
+                <label for="images">Upload Images:</label>
+                <input type="file" id="images" (change)="onFileChange($event)" multiple accept="image/*">
+            </div>
+
+            <!-- Image Previews -->
+            <div *ngIf="imagePreviews.length > 0">
+                <h4>Image Previews:</h4>
+                <div *ngFor="let image of imagePreviews">
+                    <img [src]="image" alt="Image Preview" style="width: 100px; height: 100px;">
+                </div>
+            </div>
+
+            <!-- Product Status -->
+            <div>
+                <label for="productStatus">Status:</label>
+                <select id="productStatus" [(ngModel)]="productData.productStatus" name="productStatus" required>
+                    <option [value]="0">Active</option>
+                    <option [value]="1">Inactive</option>
+                </select>
+            </div>
+
+            <button type="submit">Submit</button>
+            <button type="button" (click)="close()">Close</button>
+        </form>
+        <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
+
+    </div>
+</div>

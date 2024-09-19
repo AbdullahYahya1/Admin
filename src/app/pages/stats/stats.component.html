@@ -1,0 +1,46 @@
+@for (order of orders; track $index) {
+    <div class="order-details">
+        <h2>Order #{{ order.orderId }}</h2>
+        <p>Created At: {{ order.createdAt }}</p>
+        <p>Total Price: {{ order.totalPrice }}</p>
+        <p>Status: {{ order.status === 0 ? 'Pending' : 'Completed' }}</p>
+        <p>Shipping Status: {{ order.shippingStatus === 0 ? 'Not Shipped' : 'Shipped' }}</p>
+        <p>Shipping Date: {{ order.shippingDate || 'Not yet shipped' }}</p>
+
+        <h3>Shipping Address</h3>
+        <p>{{ order.shippingAddress.streetAddress }}, {{ order.shippingAddress.city }}, {{ order.shippingAddress.state }}, {{ order.shippingAddress.zipCode }}, {{ order.shippingAddress.country }}</p>
+
+        @if (order.transaction) {
+            <h3>Transaction Details</h3>
+            <p>Transaction Date: {{ order.transaction.transactionDate }}</p>
+            <p>Total Price: {{ order.transaction.totalPrice }}</p>
+            <p>Transaction Status: {{ order.transaction.transactionStatus === 0 ? 'Success' : 'Failed' }}</p>
+            <p>Payment Provider: {{ order.transaction.provider === 0 ? 'Credit Card' : 'Other' }}</p>
+            <p>Cardholder Name: {{ order.transaction.cardholderName }}</p>
+        } @else {
+            <p>No transaction details available.</p>
+        }
+
+        <h3>Order Items</h3>
+        @for (item of order.orderItems; track $index) {
+            <div class="order-item">
+                <h4>Product: {{ item.product.nameEn }} ({{ item.product.nameAr }})</h4>
+                <p>Category: {{ item.product.category.nameEn }} ({{ item.product.category.nameAr }})</p>
+                <p>Description: {{ item.product.descriptionEn }}</p>
+                <p>Material: {{ item.product.material.materialNameEn }}</p>
+                <p>Style: {{ item.product.style.styleNameEn }}</p>
+                <p>Color: {{ item.product.color }}</p>
+                <p>Dimensions (HxW): {{ item.product.height }}cm x {{ item.product.width }}cm</p>
+                <p>Weight: {{ item.product.weight }}kg</p>
+                <p>Price: ${{ item.product.price }}</p>
+                
+                <h5>Brand Details</h5>
+                <p>Brand: {{ item.product.brand.brandName }}</p>
+                <p>Reputation Score: {{ item.product.brand.reputationScore }}</p>
+                <p>Country of Origin: {{ item.product.brand.countryOfOrigin }}</p>
+                <p>Contact Info: {{ item.product.brand.contactInfo }}</p>
+            </div>
+        }
+    </div>
+    <hr>
+}

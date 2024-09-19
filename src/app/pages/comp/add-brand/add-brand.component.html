@@ -1,0 +1,55 @@
+<div class="modal-overlay" (click)="close()"></div> <!-- Background overlay -->
+<div class="add-brand-container">
+  <div class="add-brand-form">
+    <button class="close-button" (click)="close()">×</button>
+    <h3>Add New Brand</h3>
+
+    <form (ngSubmit)="submitBrand()">
+      
+      <!-- Brand Name Dropdown -->
+      <div>
+        <label for="brandName">Brand Name:</label>
+        <input type="text" id="brandName" [(ngModel)]="BrandData.brandName" name="brandName" placeholder="Enter brand name" required>
+      </div>
+
+      <!-- Reputation Score Dropdown -->
+      <div>
+        <label for="reputationScore">Reputation Score:</label>
+        <select id="reputationScore" [(ngModel)]="BrandData.reputationScore" name="reputationScore" required>
+          <option *ngFor="let score of reputationScores" [value]="score">{{ score }}</option>
+        </select>
+      </div>
+
+      <!-- Establishment Year Dropdown -->
+      <div>
+        <label for="establishmentYear">Establishment Year:</label>
+        <select id="establishmentYear" [(ngModel)]="BrandData.establishmentYear" name="establishmentYear" required>
+          <option *ngFor="let year of establishmentYears" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+
+      <!-- Country of Origin Dropdown -->
+      <div>
+        <label for="countryOfOrigin">Country of Origin:</label>
+        <select id="countryOfOrigin" [(ngModel)]="BrandData.countryOfOrigin" name="countryOfOrigin" required>
+          <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+        </select>
+
+        <!-- Input for "Other" country of origin -->
+        <div *ngIf="BrandData.countryOfOrigin === 'Other'">
+          <label for="otherCountry">Enter Other Country:</label>
+          <input type="text" id="otherCountry" [(ngModel)]="otherCountry" name="otherCountry" required>
+        </div>
+      </div>
+
+      <!-- Contact Info Input -->
+      <div>
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" id="contactInfo" [(ngModel)]="BrandData.contactInfo" name="contactInfo" placeholder="Enter contact info (email or phone)" required>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+    <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.product {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-details h3 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.product-details p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.product-price-actions {
+    display: flex;
+    align-items: center;
+}
+
+.product-price {
+    font-size: 24px;
+    color: #007bff;
+    margin-right: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions .edit, .actions .delete {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.actions .edit:hover {
+    color: #007bff;
+}
+
+.actions .delete:hover {
+    color: #ff0000;
+}

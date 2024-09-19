@@ -1,0 +1,42 @@
+
+
+    <div class="container" (scroll)="onScroll()">
+        <div class="button-group">
+            <button class="button" (click)="toggleAddProduct()">Add Product</button>
+            <button class="button" (click)="toggleAddCategory()">Add Category</button>
+            <button class="button" (click)="toggleAddMaterial()">Add Material</button>
+            <button class="button" (click)="toggleAddBrand()">Add Brand</button>
+            <button class="button" (click)="toggleAddStyle()">Add Style</button>
+        </div>
+        <div class="product-list">
+            <ul>
+              @for (product of products; track product.productId) {
+                <li class="product">
+                    <div class="product-details">
+                        <h3>{{ product.nameEn }}</h3>
+                        <p><strong>Category:</strong> {{ product.category.nameEn }}</p>
+                        <p><strong>Material:</strong> {{ product.material.materialNameEn }}</p>
+                        <p><strong>Style:</strong> {{ product.style.styleNameEn }}</p>
+                        <p><strong>Brand:</strong> {{ product.brand.brandName }}</p>
+                    </div>
+                    <div class="product-price-actions">
+                        <div class="product-price">${{ product.price }}</div>
+                        <div class="actions">
+                            <span class="edit">✏️</span>
+                            <span class="delete">❌</span>
+                        </div>
+                    </div>
+                </li>
+              } @empty {
+                <span>No products available</span>
+              }
+            </ul>
+        </div>
+    </div>
+    
+    <div *ngIf="loading">Loading more products...</div>
+    <app-add-product *ngIf="showAddProduct" (closeForm)="toggleAddProduct()"></app-add-product>
+    <app-add-category *ngIf="showAddCategory" (closeForm)="toggleAddCategory()"></app-add-category>
+    <app-add-material *ngIf="showAddMaterial" (closeForm)="toggleAddMaterial()"></app-add-material>
+    <app-add-brand *ngIf="showAddBrand" (closeForm)="toggleAddBrand()"></app-add-brand>
+    <app-add-style *ngIf="showAddStyle" (closeForm)="toggleAddStyle()"></app-add-style>

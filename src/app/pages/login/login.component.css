@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+  background: #f0f2f5;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.screen {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+  position: relative;
+  height: 600px;
+  width: 360px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.screen__content {
+  z-index: 1;
+  position: relative;
+  height: 100%;
+  padding: 30px;
+}
+
+.login__title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 24px;
+  color: #333;
+}
+
+.login__field {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.login__icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #a0a0a0;
+  font-size: 18px;
+}
+
+.login__input {
+  border: none;
+  border-bottom: 2px solid #d1d1d4;
+  background: none;
+  padding: 10px 10px 10px 40px;
+  font-weight: 500;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+
+.login__input:focus {
+  outline: none;
+  border-bottom-color: #6c63ff;
+}
+
+.login__submit {
+  margin-top: 20px;
+  background: #6c63ff;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 30px;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login__submit:hover {
+  background: #5753d0;
+}
+
+.button__icon {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.link-to-register {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.link-to-register a {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-to-register a:hover {
+  text-decoration: underline;
+}
+
+.screen__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.screen__background__shape {
+  position: absolute;
+  transform: rotate(45deg);
+}
+
+.screen__background__shape1 {
+  height: 500px;
+  width: 500px;
+  background: #ffffff;
+  top: -100px;
+  right: 100px;
+  border-radius: 50% 0 0 0;
+}
+
+.screen__background__shape2 {
+  height: 200px;
+  width: 200px;
+  background: #d1d1d4;
+  top: -150px;
+  right: 0;
+  border-radius: 50%;
+}
+
+.screen__background__shape3 {
+  height: 500px;
+  width: 200px;
+  background: linear-gradient(270deg, #ffffff 0%, #ffffff 100%);
+  top: -50px;
+  right: 0;
+  border-radius: 50%;
+}
+
+.screen__background__shape4 {
+  height: 400px;
+  width: 200px;
+  background: #d1d1d4;
+  top: 400px;
+  right: 50px;
+  border-radius: 50%;
+}
+.error{
+	color:  red;
+}
