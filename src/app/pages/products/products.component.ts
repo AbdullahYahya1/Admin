@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { MasterService } from '../../services/master.service';
-import { ColorTranslations, LookUpDataModel, Product, ProductStatusTranslations } from '../../interfaces/interfaces';
+import { ColorTranslations, LookUpDataModel, postDeactivateProduct, Product, ProductStatusTranslations } from '../../interfaces/interfaces';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AddProductComponent } from "../comp/add-product/add-product.component";
@@ -8,11 +8,14 @@ import { AddCategoryComponent } from "../comp/add-category/add-category.componen
 import { AddMaterialComponent } from "../comp/add-material/add-material.component";
 import { AddBrandComponent } from "../comp/add-brand/add-brand.component";
 import { AddStyleComponent } from "../comp/add-style/add-style.component";
+import { TemplateBindingParseResult, NONE_TYPE } from '@angular/compiler';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, HttpClientModule,AddProductComponent, AddCategoryComponent, AddMaterialComponent, AddStyleComponent, AddBrandComponent],
+  imports: [FormsModule,CommonModule, HttpClientModule,AddProductComponent, AddCategoryComponent, AddMaterialComponent, AddStyleComponent, AddBrandComponent],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
@@ -51,7 +54,9 @@ export class ProductsComponent implements OnInit {
   constructor(private masterService: MasterService) {}
   ngOnInit(): void {
     this.loadProducts();
-
+    this.searchSubject.pipe(debounceTime(300)).subscribe((term) => {
+      this.onSearch(term);
+    });
   }
 
 
@@ -93,7 +98,67 @@ export class ProductsComponent implements OnInit {
 
     
   }
-
+  searchTerm: string = '';
+  items: string[] = ['Apple', 'Banana', 'Orange', 'Grapes']; 
+  filteredItems: string[] = [];
+  searchSubject: Subject<string> = new Subject<string>();
+  onInputChange(term: string): void {
+    this.searchSubject.next(term); 
+  }
+  onSearch(term: string): void {
+    this.products = [];
+    this.pageNumber = 1;
+  
+    if (!term) {
+      this.loadProducts();
+    } else {
+      this.masterService.searchProducts(term, this.pageNumber, this.pageSize).subscribe(
+        (response) => {
+          if (response.isSuccess) {
+            this.products = response.result.map((product) => ({
+              ...product,
+              colorNameEn: ColorTranslations.en[product.color],
+              colorNameAr: ColorTranslations.ar[product.color],
+              statusNameEn: ProductStatusTranslations.en[product.productStatus],
+              statusNameAr: ProductStatusTranslations.ar[product.productStatus],
+            }));
+          } else {
+            console.log('f')
+            this.errorMessage = 'No products found';
+          }
+        },
+        (error) => {
+          this.errorMessage = 'An error occurred while searching for products';
+          console.error(error);
+        }
+      );
+    }
+  }
+  
+changeStatus(number:number){
+  var postDeactivate :postDeactivateProduct={
+    productId: number
+  }
+  this.masterService.DeactivateProduct(postDeactivate).subscribe({
+    next: (res) => {
+      console.log(res)
+      this.products=this.products.filter(p=>p.productId!=res.result.productId)
+    },
+    error: (error) => {
+      console.log('Error: ', error);
+    }
+  });
+}
+  
+  Selectedproduct: Product | undefined;
+  ShowForm:boolean =false;
+  onSelect(product:Product){
+    this.Selectedproduct = product;
+    this.ShowForm = true; 
+  }
+  close(){
+    this.ShowForm = false; 
+  }
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
     const threshold = 300; 

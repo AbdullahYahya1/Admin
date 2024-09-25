@@ -33,14 +33,18 @@ export interface Category {
     descriptionEn: string;
     material: Material;
     style: Style;
-    color: Color;  // Enum from the existing code
+    color: Color;  
     height: number;
     width: number;
     weight: number;
     price: number;
     brand: Brand;
-    images: { imageUrl: string }[]; // Assuming images are URLs in base64 or similar format
-    productStatus: ProductStatus; // Enum from the existing code
+    images: { imageUrl: string }[]; 
+    productStatus: ProductStatus;
+    statusNameAr:string;
+    statusNameEn:string;
+    colorNameEn:string;
+    colorNameAr:string;
   }
   
   // For pagination
@@ -50,6 +54,9 @@ export interface Category {
     message: string | null;
   }
   
+  export interface postDeactivateProduct{
+    productId: number;
+  }
 export interface Address {
     addressId: number;
     streetAddress: string;
@@ -77,27 +84,7 @@ export interface Address {
     contactInfo: string;
   }
   
-  export interface Product {
-    productId: number;
-    nameAr: string;
-    nameEn: string;
-    descriptionAr: string;
-    descriptionEn: string;
-    price: number;
-    category: {
-      nameAr: string;
-      nameEn: string;
-    };
-    material: Material;
-    style: Style;
-    brand: Brand;
-    images: { imageUrl: string }[];
-    color: Color;
-    height: number;
-    width: number;
-    weight: number;
-  }
-  
+
   export interface OrderItem {
     product: Product;
   }

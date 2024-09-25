@@ -14,28 +14,23 @@ export class AuthService {
   refreshToken(): Observable<boolean> {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
-
-    // If either token is missing, the user cannot refresh
     if (!accessToken || !refreshToken) {
       return of(false);
     }
-
     const refreshUrl = `${environment.apiUrl}Authentication/RefreshToken`;
     return this.http.post<any>(refreshUrl, { accessToken, refreshToken }).pipe(
       map((res: any) => {
         if (res.isSuccess) {
-          // Store new tokens and expiration
           localStorage.setItem('accessToken', res.result.accessToken);
           localStorage.setItem('refreshToken', res.result.refreshToken);
-          const newExpirationTime = new Date().getTime() + (30); 
+          const newExpirationTime = new Date().getTime() + (3000); 
           localStorage.setItem('tokenExpiration', newExpirationTime.toString());
-          console.log("refreshed")
           return true;
         }
         return false;
       }),
       catchError(() => {
-        return of(false); // If an error occurs, return false
+        return of(false);
       })
     );
   }
