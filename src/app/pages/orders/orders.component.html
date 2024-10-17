@@ -1,0 +1,51 @@
+<h2>Orders</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Customer Name</th>
+      <th>Order Date</th>
+      <th>Total Amount</th>
+      <th>Transaction Status</th>
+      <th>Shipping Status</th>
+      <th>Status</th>
+      <th>Actions</th> <!-- New Actions Column -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.orderId }}</td>
+      <td>{{ order.shippingAddress.streetAddress }}</td>
+      <td>{{ order.createdAt | date }}</td>
+      <td>{{ order.totalPrice | currency }}</td>
+      <td>
+        {{ order.transaction && order.transaction.transactionStatus != null
+          ? dictionaries.TransactionStatus[order.transaction.transactionStatus].en
+          : 'Not Payed'
+        }}
+      </td>
+      <td>{{ dictionaries.ShippingStatus[order.shippingStatus].en }}</td>
+      <td [ngClass]="getStatusClass(order.status)">
+        {{ dictionaries.OrderStatus[order.status].en }}
+      </td>
+      <!-- Actions Column with Menu -->
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          ⋮ <!-- Three dots icon -->
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="displayOrderDetails(order.orderId)">Show Order Details</button>
+          <button mat-menu-item (click)="cancelOrder(order.orderId)">Cancel Order</button>
+          <button mat-menu-item (click)="completeOrder(order.orderId)">Complete Order</button>
+        </mat-menu>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Order Details Section (Conditional) -->
+<div *ngIf="isOrderDetailsVisible">
+  <h3>Order Details for Order ID: {{ orderId }}</h3>
+  <!-- Display order details here or load from a service -->
+  <button (click)="closeOrderDetails()">Close</button>
+</div>

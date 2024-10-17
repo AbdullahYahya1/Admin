@@ -4,6 +4,7 @@ import { StatsComponent } from './pages/stats/stats.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './Guard/auth.guard';
 import { ProductsComponent } from './pages/products/products.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 
 export const routes: Routes = [
   {    
@@ -27,6 +28,11 @@ export const routes: Routes = [
       {
         path: 'products',
         component: ProductsComponent,
+        canActivate: [authGuard] 
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
         canActivate: [authGuard] 
       },
       // Add other protected routes here

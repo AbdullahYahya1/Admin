@@ -245,3 +245,67 @@ export interface LookUpDataModel<T> {
   }
   export type LookUpDataModelInt = LookUpDataModel<number>;
   
+  export type Language = 'en' | 'ar';
+
+  export const dictionaries = {
+      TransactionStatus: {
+          0: { en: "Payed", ar: "مدفوع" },
+          1: { en: "Failed", ar: "فشل" },
+      },
+      PaymentProvider: {
+          0: { en: "Visa", ar: "فيزا" },
+          1: { en: "MasterCard", ar: "ماستر كارد" },
+          2: { en: "Mada", ar: "مدى" },
+      },
+      ServiceRequestStatus: {
+          0: { en: "New", ar: "جديد" },
+          1: { en: "In Progress", ar: "قيد التنفيذ" },
+          2: { en: "Resolved", ar: "تم الحل" },
+          3: { en: "Closed", ar: "مغلق" },
+          4: { en: "Rejected", ar: "مرفوض" },
+      },
+      RequestType: {
+          0: { en: "Repair", ar: "إصلاح" },
+          1: { en: "Return", ar: "إرجاع" },
+          2: { en: "Sell", ar: "بيع" },
+          3: { en: "Buy", ar: "شراء" },
+      },
+      ProductStatus: {
+          0: { en: "Active", ar: "نشط" },
+          1: { en: "Inactive", ar: "غير نشط" },
+      },
+      Color: {
+          0: { en: "Black", ar: "أسود" },
+          1: { en: "White", ar: "أبيض" },
+          2: { en: "Red", ar: "أحمر" },
+          3: { en: "Green", ar: "أخضر" },
+          4: { en: "Blue", ar: "أزرق" },
+          5: { en: "Yellow", ar: "أصفر" },
+          6: { en: "Orange", ar: "برتقالي" },
+          7: { en: "Purple", ar: "أرجواني" },
+          8: { en: "Pink", ar: "وردي" },
+          9: { en: "Gray", ar: "رمادي" },
+          10: { en: "Brown", ar: "بني" },
+          11: { en: "Cyan", ar: "سماوي" },
+          12: { en: "Magenta", ar: "أرجواني" },
+      },
+      OrderStatus: {
+          0: { en: "Processing", ar: "قيد المعالجة" },
+          1: { en: "Complete", ar: "مكتمل" },
+          2: { en: "Cancelled", ar: "ملغي" },
+          3: { en: "Returned", ar: "مرتجع" },
+      },
+      ShippingStatus: {
+          0: { en: "Not Shipped", ar: "لم يتم الشحن" },
+          1: { en: "In Transit", ar: "في الطريق" },
+          2: { en: "Out For Delivery", ar: "في الطريق للتوصيل" },
+          3: { en: "Delivered", ar: "تم التوصيل" },
+          4: { en: "Failed Delivery", ar: "فشل في التوصيل" },
+      },
+      UserType: {
+          0: { en: "Client", ar: "عميل" },
+          1: { en: "Manager", ar: "مدير" },
+          2: { en: "Support", ar: "الدعم" },
+          3: { en: "Delivery Representative", ar: "مندوب توصيل" },
+      }
+  };
