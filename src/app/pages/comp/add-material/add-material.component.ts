@@ -1,13 +1,13 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { PostMaterialDto } from '../../../interfaces/interfaces';
 import { MasterService } from '../../../services/master.service';
 import { NotificationComponent } from "../notification/notification.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-material',
   standalone: true,
-  imports: [FormsModule, NotificationComponent],
+  imports: [ NotificationComponent, FormsModule],
   templateUrl: './add-material.component.html',
   styleUrl: './add-material.component.css'
 })

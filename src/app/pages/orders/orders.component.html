@@ -28,16 +28,16 @@
       <td [ngClass]="getStatusClass(order.status)">
         {{ dictionaries.OrderStatus[order.status].en }}
       </td>
-      <!-- Actions Column with Menu -->
+      <!-- Actions Column with Custom Dropdown Menu -->
       <td>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          ⋮ <!-- Three dots icon -->
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="displayOrderDetails(order.orderId)">Show Order Details</button>
-          <button mat-menu-item (click)="cancelOrder(order.orderId)">Cancel Order</button>
-          <button mat-menu-item (click)="completeOrder(order.orderId)">Complete Order</button>
-        </mat-menu>
+        <div class="dropdown">
+          <button (click)="toggleDropdown(order.orderId)" class="dropdown-button">⋮</button>
+          <div *ngIf="activeDropdown === order.orderId" class="dropdown-menu">
+            <button (click)="displayOrderDetails(order.orderId)">Show Order Details</button>
+            <button (click)="cancelOrder(order.orderId)">Cancel Order</button>
+            <button (click)="completeOrder(order.orderId)">Complete Order</button>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>

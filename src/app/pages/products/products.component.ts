@@ -1,21 +1,20 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { ColorTranslations, LookUpDataModel, postDeactivateProduct, Product, ProductStatusTranslations } from '../../interfaces/interfaces';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { AddProductComponent } from "../comp/add-product/add-product.component";
 import { AddCategoryComponent } from "../comp/add-category/add-category.component";
 import { AddMaterialComponent } from "../comp/add-material/add-material.component";
 import { AddBrandComponent } from "../comp/add-brand/add-brand.component";
 import { AddStyleComponent } from "../comp/add-style/add-style.component";
 import { TemplateBindingParseResult, NONE_TYPE } from '@angular/compiler';
-import { FormsModule } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule,CommonModule, HttpClientModule,AddProductComponent, AddCategoryComponent, AddMaterialComponent, AddStyleComponent, AddBrandComponent],
+  imports: [AddProductComponent, AddCategoryComponent, AddMaterialComponent, AddBrandComponent, AddStyleComponent,JsonPipe,FormsModule,CommonModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })

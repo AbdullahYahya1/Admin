@@ -1,13 +1,13 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { PostCategoryDto } from '../../../interfaces/interfaces';
-import { FormsModule } from '@angular/forms';
 import { MasterService } from '../../../services/master.service';
 import { NotificationComponent } from "../notification/notification.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-category',
   standalone: true,
-  imports: [FormsModule, NotificationComponent],
+  imports: [ NotificationComponent,FormsModule],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css'
 })

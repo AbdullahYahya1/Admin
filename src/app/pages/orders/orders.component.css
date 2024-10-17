@@ -66,3 +66,43 @@ h2 {
     color: #0c5460; /* Dark blue */
 }
 
+/* Style for dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style for dropdown button (three dots) */
+.dropdown-button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+/* Style for dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Style for each menu item */
+.dropdown-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}

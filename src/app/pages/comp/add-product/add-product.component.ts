@@ -2,13 +2,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MasterService } from '../../../services/master.service';
 import { LookUpDataModel, PostProductDto } from '../../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgModel } from '@angular/forms';
 import { NotificationComponent } from "../notification/notification.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, NotificationComponent],
+  imports: [CommonModule, NotificationComponent,FormsModule],
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
@@ -132,6 +132,7 @@ export class AddProductComponent implements OnInit {
     this.masterService.postProduct(this.productData).subscribe(
       (response) => {
         if (response.isSuccess) {
+          console.log( 'Product Data:', this.productData);
           this.message = 'Product added successfully!';
           this.isSuccess = true;
         } else {

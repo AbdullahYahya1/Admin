@@ -18,7 +18,7 @@ export class MasterService {
     return this.http.get<ApiResponse<Order[]>>(`${this.apiUrl}Order/GetOrders`);
   }
   getProducts(pageNumber: number = 1, pageSize: number = 10): Observable<ApiResponse<Product[]>> {
-    const url = `${this.apiUrl}Product/GetProducts?PageNumber=${pageNumber}&PageSize=${pageSize}`;
+    const url = `${this.apiUrl}Product/SearchProducts?PageNumber=${pageNumber}&PageSize=${pageSize}`;
     return this.http.get<ApiResponse<Product[]>>(url);
   }
   getLookUp<T>(lookupUrl: string): Observable<ApiResponse<LookUpDataModel<T>[]>> {

@@ -2,15 +2,15 @@ import { Brand } from './../../../interfaces/interfaces';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { PostBrandDto } from '../../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MasterService } from '../../../services/master.service';
 import { catchError, EMPTY, tap } from 'rxjs';
 import { NotificationComponent } from "../notification/notification.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-brand',
   standalone: true,
-  imports: [CommonModule, FormsModule, NotificationComponent],
+  imports: [CommonModule,NotificationComponent,FormsModule],
   templateUrl: './add-brand.component.html',
   styleUrl: './add-brand.component.css'
 })
