@@ -1,3 +1,4 @@
+<h1>Products</h1>
 <div class="container" (scroll)="onScroll()">
     <div class="bar">
         <div class="button-group">
@@ -8,13 +9,8 @@
             <button class="button" (click)="toggleAddStyle()">Add Style</button>
         </div>
         <div class="search-bar">
-            <input 
-              type="text" 
-              placeholder="Search..." 
-              [(ngModel)]="searchTerm" 
-              (input)="onInputChange(searchTerm)" 
-              (keyup.enter)="onSearch(searchTerm)" 
-            />
+            <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" (input)="onInputChange(searchTerm)"
+                (keyup.enter)="onSearch(searchTerm)" />
         </div>
     </div>
     <div class="product-list">
@@ -27,13 +23,12 @@
                     <p><strong>Material:</strong> {{ product.material.materialNameEn }}</p>
                     <p><strong>Style:</strong> {{ product.style.styleNameEn }}</p>
                     <p><strong>Brand:</strong> {{ product.brand.brandName }}</p>
-                    <p><strong>Status:</strong> {{product.statusNameEn}}</p>
                 </div>
                 <div class="product-price-actions">
                     <div class="product-price">${{ product.price }}</div>
                     <div class="actions">
                         <span class="edit" (click)="onSelect(product)">✏️</span>
-                        <span class="delete" (click)="changeStatus(product.productId)" >❌</span>
+                        <span class="delete" (click)="conformDelete(product)">❌</span>
                     </div>
                 </div>
             </li>
@@ -43,13 +38,128 @@
         </ul>
     </div>
 </div>
-@if (this.ShowForm) {
-    <div>
-    {{this.Selectedproduct|json}}
-    <!-- <button (click)="edit()">edit</button> -->
-    <button (click)="close()">close</button>
+
+<div class="modal-overlay" *ngIf="showConfirmDialog">
+    <div class="modal-container">
+        <div class="modal-content">
+            <button class="close-button" (click)="cancelDelete()">×</button>
+            <h3>Are you sure you want to delete this product?</h3>
+            <p><strong>{{ Selectedproduct.nameEn }}</strong></p>
+            <div class="modal-actions">
+                <button class="confirm-button" (click)="deleteProduct()">Yes</button>
+                <button class="cancel-button" (click)="cancelDelete()">No</button>
+            </div>
+        </div>
     </div>
+</div>
+
+@if (this.ShowForm)
+{
+  <div class="custom-modal-overlay" (click)="close()"></div> <!-- Background overlay -->
+  <div class="custom-modal-container">
+    <div class="custom-modal-content">
+      <button class="custom-close-button" (click)="close()">×</button>
+
+      <h3>Edit Product</h3>
+
+      <form (ngSubmit)="saveProduct()">
+        <!-- Product Name English -->
+        <div>
+          <label for="nameEn">Product Name (English):</label>
+          <input type="text" id="nameEn" [(ngModel)]="Selectedproduct.nameEn" name="nameEn" required>
+        </div>
+
+        <!-- Product Name Arabic -->
+        <div>
+          <label for="nameAr">Product Name (Arabic):</label>
+          <input type="text" id="nameAr" [(ngModel)]="Selectedproduct.nameAr" name="nameAr" required>
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label for="price">Price:</label>
+          <input type="number" id="price" [(ngModel)]="Selectedproduct.price" name="price" min="0" required>
+        </div>
+
+        <!-- Category Dropdown -->
+        <div>
+          <label for="category">Category:</label>
+          <select id="category" [(ngModel)]="Selectedproduct.category.categoryId" name="categoryId" required>
+            <option *ngFor="let category of categories" [value]="category.value">{{ category.nameEn }}</option>
+          </select>
+        </div>
+
+        <!-- Brand Dropdown -->
+        <div>
+          <label for="brand">Brand:</label>
+          <select id="brand" [(ngModel)]="Selectedproduct.brand.brandId" name="brandId" required>
+            <option *ngFor="let brand of brands" [value]="brand.value">{{ brand.nameEn }}</option>
+          </select>
+        </div>
+
+        <!-- Material Dropdown -->
+        <div>
+          <label for="material">Material:</label>
+          <select id="material" [(ngModel)]="Selectedproduct.material.materialId" name="materialId" required>
+            <option *ngFor="let material of materials" [value]="material.value">{{ material.nameEn }}</option>
+          </select>
+        </div>
+
+        <!-- Style Dropdown -->
+        <div>
+          <label for="style">Style:</label>
+          <select id="style" [(ngModel)]="Selectedproduct.style.styleId" name="styleId" required>
+            <option *ngFor="let style of styles" [value]="style.value">{{ style.nameEn }}</option>
+          </select>
+        </div>
+
+        <!-- Description Fields -->
+        <div>
+          <label for="descriptionEn">Description (English):</label>
+          <textarea id="descriptionEn" [(ngModel)]="Selectedproduct.descriptionEn" name="descriptionEn" required></textarea>
+        </div>
+
+        <div>
+          <label for="descriptionAr">Description (Arabic):</label>
+          <textarea id="descriptionAr" [(ngModel)]="Selectedproduct.descriptionAr" name="descriptionAr" required></textarea>
+        </div>
+
+        <!-- Product Dimensions -->
+        <div>
+          <label for="height">Height:</label>
+          <input type="number" id="height" [(ngModel)]="Selectedproduct.height" name="height" required>
+        </div>
+
+        <div>
+          <label for="width">Width:</label>
+          <input type="number" id="width" [(ngModel)]="Selectedproduct.width" name="width" required>
+        </div>
+
+        <div>
+          <label for="weight">Weight:</label>
+          <input type="number" id="weight" [(ngModel)]="Selectedproduct.weight" name="weight" required>
+        </div>
+
+        <!-- Images -->
+        <div>
+            <label for="images">Upload New Images:</label>
+            <div class="product-images">
+              <div *ngFor="let img of Selectedproduct.images" class="image-preview">
+                <img [src]="Url + '/' + img.imageUrl" alt="Product Image" />
+                <button type="button" class="remove-image" (click)="removeImage(img)">X</button>
+              </div>
+              <input type="file" id="images" (change)="onImageSelected($event)" multiple accept="image/*">
+            </div>
+        </div>
+
+        <button type="submit" class="custom-button">Save</button>
+        <button type="button" class="custom-button" (click)="close()">Cancel</button>
+      </form>
+    </div>
+  </div>
 }
+
+
 
 <div *ngIf="loading">Loading more products...</div>
 <app-add-product *ngIf="showAddProduct" (closeForm)="toggleAddProduct()"></app-add-product>

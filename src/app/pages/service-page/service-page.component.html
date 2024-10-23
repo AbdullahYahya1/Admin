@@ -1,0 +1,33 @@
+<div class="service-page">
+    <h2>Service Request Details</h2>
+    <div class="request-details">
+      <p><strong>Product Details:</strong> {{service?.productDetails}}</p>
+      <p><strong>Requested Price:</strong> {{service?.requestedPrice | currency}}</p>
+      <p><strong>Purchase Price:</strong> {{service?.purchasePrice | currency}}</p>
+      <p><strong>Submission Date:</strong> {{service?.submissionDate | date:'long'}}</p>
+      <p><strong>User Phone Number:</strong> {{service?.userPhone | date:'long'}}</p>
+
+      <p><strong>Service Status:</strong>
+        {{ dictionaries.ServiceRequestStatus[service?.serviceRequestStatus]?.en || 'Status Not Available' }}
+      </p>
+          </div>
+    <div class="service-response">
+      <h3>Respond to the Request</h3>
+      <form #responseForm="ngForm" (ngSubmit)="submitResponse()">
+        <div class="form-group">
+          <label for="responseDetails">Response Details:</label>
+          <textarea id="responseDetails" name="responseDetails" [(ngModel)]="responseDetails" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="serviceStatus">Update Status:</label>
+          <select id="serviceStatus" name="serviceStatus" [(ngModel)]="serviceStatus">
+            <option *ngFor="let status of serviceStatusList" [value]="status.id">
+              {{ status.label }}
+            </option>
+          </select>
+        </div>
+        <button type="submit" [disabled]="!responseForm.valid">Submit Response</button>
+      </form>
+    </div>
+  </div>
+  

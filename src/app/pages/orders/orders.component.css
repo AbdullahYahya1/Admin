@@ -57,7 +57,7 @@ h2 {
 }
 
 .case-danger {
-    background-color: #f8d7da; /* Light red */
+    background-color: red; /* Light red */
     color: #721c24; /* Dark red */
 }
 
@@ -101,8 +101,18 @@ h2 {
   text-align: left;
   cursor: pointer;
   padding: 5px 10px;
-}
 
+}
+.cc{
+    padding: 7px; border-radius: 15px; text-align: center;
+    width: 100px;
+}
+.center{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+}
 .dropdown-menu button:hover {
   background-color: #f0f0f0;
 }

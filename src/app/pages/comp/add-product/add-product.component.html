@@ -8,25 +8,25 @@
             <!-- Product Name in Arabic -->
             <div>
                 <label for="nameAr">Product Name (AR):</label>
-                <input type="text" id="nameAr" [(ngModel)]="productData.nameAr" name="nameAr" required>
+                <input type="text" id="nameAr" [(ngModel)]="productData.NameAr" name="nameAr" required>
             </div>
 
             <!-- Product Name in English -->
             <div>
                 <label for="nameEn">Product Name (EN):</label>
-                <input type="text" id="nameEn" [(ngModel)]="productData.nameEn" name="nameEn" required>
+                <input type="text" id="nameEn" [(ngModel)]="productData.NameEn" name="nameEn" required>
             </div>
 
             <!-- Product Price -->
             <div>
                 <label for="price">Price:</label>
-                <input type="number" id="price" [(ngModel)]="productData.price" name="price" required>
+                <input type="number" id="price" [(ngModel)]="productData.Price" name="price" required>
             </div>
 
             <!-- Dropdown for Category -->
             <div>
                 <label for="category">Category:</label>
-                <select id="category" [(ngModel)]="productData.categoryId" name="categoryId" required>
+                <select id="category" [(ngModel)]="productData.CategoryId" name="categoryId" required>
                     <option *ngFor="let category of Categories" [value]="category.value">{{ category.nameEn }}</option>
                 </select>
             </div>
@@ -34,7 +34,7 @@
             <!-- Dropdown for Brand -->
             <div>
                 <label for="brand">Brand:</label>
-                <select id="brand" [(ngModel)]="productData.brandId" name="brandId" required>
+                <select id="brand" [(ngModel)]="productData.BrandId" name="brandId" required>
                     <option *ngFor="let brand of brands" [value]="brand.value">{{ brand.nameEn }}</option>
                 </select>
             </div>
@@ -42,7 +42,7 @@
             <!-- Dropdown for Material -->
             <div>
                 <label for="material">Material:</label>
-                <select id="material" [(ngModel)]="productData.materialId" name="materialId" required>
+                <select id="material" [(ngModel)]="productData.MaterialId" name="materialId" required>
                     <option *ngFor="let material of Materials" [value]="material.value">{{ material.nameEn }}</option>
                 </select>
             </div>
@@ -50,7 +50,7 @@
             <!-- Dropdown for Style -->
             <div>
                 <label for="style">Style:</label>
-                <select id="style" [(ngModel)]="productData.styleId" name="styleId" required>
+                <select id="style" [(ngModel)]="productData.StyleId" name="styleId" required>
                     <option *ngFor="let style of Styles" [value]="style.value">{{ style.nameEn }}</option>
                 </select>
             </div>
@@ -58,28 +58,28 @@
             <!-- Description Fields -->
             <div>
                 <label for="descriptionAr">Description (AR):</label>
-                <textarea id="descriptionAr" [(ngModel)]="productData.descriptionAr" name="descriptionAr"></textarea>
+                <textarea id="descriptionAr" [(ngModel)]="productData.DescriptionAr" name="descriptionAr"></textarea>
             </div>
 
             <div>
                 <label for="descriptionEn">Description (EN):</label>
-                <textarea id="descriptionEn" [(ngModel)]="productData.descriptionEn" name="descriptionEn"></textarea>
+                <textarea id="descriptionEn" [(ngModel)]="productData.DescriptionEn" name="descriptionEn"></textarea>
             </div>
 
             <!-- Product Dimensions -->
             <div>
                 <label for="height">Height:</label>
-                <input type="number" id="height" [(ngModel)]="productData.height" name="height" required>
+                <input type="number" id="height" [(ngModel)]="productData.Height" name="height" required>
             </div>
 
             <div>
                 <label for="width">Width:</label>
-                <input type="number" id="width" [(ngModel)]="productData.width" name="width" required>
+                <input type="number" id="width" [(ngModel)]="productData.Width" name="width" required>
             </div>
 
             <div>
                 <label for="weight">Weight:</label>
-                <input type="number" id="weight" [(ngModel)]="productData.weight" name="weight" required>
+                <input type="number" id="weight" [(ngModel)]="productData.Weight" name="weight" required>
             </div>
 
             <!-- Image Upload Section -->
@@ -99,7 +99,7 @@
             <!-- Product Status -->
             <div>
                 <label for="productStatus">Status:</label>
-                <select id="productStatus" [(ngModel)]="productData.productStatus" name="productStatus" required>
+                <select id="productStatus" [(ngModel)]="productData.ProductStatus" name="productStatus" required>
                     <option [value]="0">Active</option>
                     <option [value]="1">Inactive</option>
                 </select>

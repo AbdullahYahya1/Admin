@@ -1,51 +1,52 @@
-<h2>Orders</h2>
-<table>
+<h2 *ngIf="!isOrderDetailsVisible">Orders</h2>
+<table *ngIf="!isOrderDetailsVisible">
   <thead>
     <tr>
-      <th>Order ID</th>
-      <th>Customer Name</th>
+      <th>Shipping Address</th>
       <th>Order Date</th>
       <th>Total Amount</th>
       <th>Transaction Status</th>
       <th>Shipping Status</th>
       <th>Status</th>
-      <th>Actions</th> <!-- New Actions Column -->
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let order of orders">
-      <td>{{ order.orderId }}</td>
-      <td>{{ order.shippingAddress.streetAddress }}</td>
+      <td>{{ order.shippingAddress.city }}</td>
       <td>{{ order.createdAt | date }}</td>
       <td>{{ order.totalPrice | currency }}</td>
-      <td>
-        {{ order.transaction && order.transaction.transactionStatus != null
-          ? dictionaries.TransactionStatus[order.transaction.transactionStatus].en
-          : 'Not Payed'
-        }}
+      <td class="center">
+        <div [ngClass]="order.transaction?.transactionStatus === 0 ? 'case-success' : 'case-danger'" class="cc">
+          {{ order.transaction == null 
+            ? 'Not Payed' 
+            : dictionaries.TransactionStatus[order.transaction.transactionStatus]?.en }}
+        </div>
       </td>
       <td>{{ dictionaries.ShippingStatus[order.shippingStatus].en }}</td>
-      <td [ngClass]="getStatusClass(order.status)">
-        {{ dictionaries.OrderStatus[order.status].en }}
+      <td class="center">
+        <div [ngClass]="getStatusClass(order.status)" class="cc">
+          {{ dictionaries.OrderStatus[order.status].en }}
+        </div>
       </td>
-      <!-- Actions Column with Custom Dropdown Menu -->
       <td>
         <div class="dropdown">
           <button (click)="toggleDropdown(order.orderId)" class="dropdown-button">⋮</button>
           <div *ngIf="activeDropdown === order.orderId" class="dropdown-menu">
-            <button (click)="displayOrderDetails(order.orderId)">Show Order Details</button>
-            <button (click)="cancelOrder(order.orderId)">Cancel Order</button>
-            <button (click)="completeOrder(order.orderId)">Complete Order</button>
+            <button (click)="displayOrderDetails(order)">Show Order Details</button>
+            <button *ngIf="order.status === 0 && order.shippingStatus === 0" (click)="assinToDriver(order.orderId)">Assign Order to Driver</button>
           </div>
         </div>
       </td>
     </tr>
   </tbody>
 </table>
-
-<!-- Order Details Section (Conditional) -->
 <div *ngIf="isOrderDetailsVisible">
-  <h3>Order Details for Order ID: {{ orderId }}</h3>
-  <!-- Display order details here or load from a service -->
-  <button (click)="closeOrderDetails()">Close</button>
+  <app-order-ditails *ngIf="selectedOrder" [order]="selectedOrder" (closeOrder)="closeOrderDetails()"></app-order-ditails>
 </div>
+<app-assginto-driver 
+  *ngIf="assgintoDriver" 
+  [orderId]="orderId" 
+  (closeForm)="toggleAssgintoDriverProduct()" 
+  (orderAssigned)="handleDriverAssigned($event)">
+</app-assginto-driver>

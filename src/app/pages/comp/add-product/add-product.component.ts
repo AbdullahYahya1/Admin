@@ -14,21 +14,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddProductComponent implements OnInit {
   productData: PostProductDto = {
-    categoryId: 0,
-    nameAr: '',
-    nameEn: '',
-    descriptionAr: '',
-    descriptionEn: '',
-    materialId: 0,
-    styleId: 0,
-    color: 0,
-    height: 0,
-    width: 0,
-    weight: 0,
-    price: 0,
-    brandId: 0,
-    imagesString64: [],
-    productStatus: 0
+    CategoryId: 0,
+    NameAr: '',
+    NameEn: '',
+    DescriptionAr: '',
+    DescriptionEn: '',
+    MaterialId: 0,
+    StyleId: 0,
+    Color: 0,
+    Height: 0,
+    Width: 0,
+    Weight: 0,
+    Price: 0,
+    BrandId: 0,
+    ImagesString64: [],
+    ProductStatus: 0
   };
   message = '';
   isSuccess = true;
@@ -119,7 +119,7 @@ export class AddProductComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
           const base64String = (reader.result as string).split(',')[1]; 
-          this.productData.imagesString64.push(base64String);
+          this.productData.ImagesString64.push(base64String);
           this.imagePreviews.push(reader.result as string); 
         };
         reader.readAsDataURL(file); 

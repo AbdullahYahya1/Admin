@@ -1,0 +1,39 @@
+<div class="order-container">
+    <h1 class="main-title">Order Summary</h1>
+  
+    <div class="order-info">
+      <h2 class="section-title">Order Information</h2>
+      <p><strong>Order Date:</strong> {{ order.createdAt | date: 'fullDate' }}</p>
+      <p><strong>Status:</strong> {{ order.status === 0 ? 'Pending' : 'Shipped' }}</p>
+      <p><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>
+    </div>
+  
+    <div class="shipping-info">
+      <h2 class="section-title">Shipping Information</h2>
+      <p><strong>Street Address:</strong> {{ order.shippingAddress.streetAddress }}</p>
+      <p><strong>City:</strong> {{ order.shippingAddress.city }}</p>
+      <p><strong>State:</strong> {{ order.shippingAddress.state }}</p>
+      <p><strong>Zip Code:</strong> {{ order.shippingAddress.zipCode }}</p>
+      <p><strong>Country:</strong> {{ order.shippingAddress.country }}</p>
+    </div>
+  
+    <div class="order-items">
+      <h2 class="section-title">Items in this Order</h2>
+      <div class="product-list">
+        <div *ngFor="let item of order.orderItems; let i = index" class="product-card">
+          <div class="product-image-container">
+            <img [src]="Url + '/' + item.product.images[0].imageUrl" alt="Product Image" class="product-image" />
+          </div>
+          <div class="product-details">
+            <h3>{{ item.product.nameEn }}</h3>
+            <p><strong>Price:</strong> {{ item.product.price | currency }}</p>
+            <p><strong>Brand:</strong> {{ item.product.brand.brandName }}</p>
+            <p><strong>Material:</strong> {{ item.product.material.materialNameEn }}</p>
+            <p><strong>Dimensions:</strong> {{ item.product.height }} x {{ item.product.width }} (HxW)</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  

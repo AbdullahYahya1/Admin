@@ -1,0 +1,20 @@
+<div class="modal-overlay" (click)="close()"></div>
+<div class="add-style-container">
+    <div class="add-style-form">
+        <h3>Assign to Driver</h3>
+
+ 
+        <label for="driver-select">Select a Driver:</label>
+        <select id="driver-select" [(ngModel)]="selectedDriverId">
+            <option *ngFor="let driver of driversLookup" [value]="driver.value">
+                {{ driver.nameAr }}
+            </option>
+        </select>
+        <div *ngIf="message" class="message" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
+            {{ message }}
+        </div>
+        <button (click)="submitAssign()">Assign Driver</button>
+
+        <button (click)="close()">Cancel</button>
+    </div>
+</div>

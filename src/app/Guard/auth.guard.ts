@@ -23,6 +23,8 @@ export const authGuard: CanActivateFn = (route, state) => {
         }
       }),
       catchError(() => {
+        console.log('Token expired. Redirecting to login page... 22');
+
         router.navigate(['/login']); 
         return of(false);
       })

@@ -1,70 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { MasterService } from '../../services/master.service';
-import { dictionaries, Order } from '../../interfaces/interfaces';
+import { dictionaries, DictionariesEnum, Order } from '../../interfaces/interfaces';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AssgintoDriverComponent } from "../comp/assginto-driver/assginto-driver.component";
+import { OrderDitailsComponent } from "../comp/order-ditails/order-ditails.component";
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [JsonPipe, CommonModule, FormsModule],
+  imports: [JsonPipe, CommonModule, FormsModule, AssgintoDriverComponent, OrderDitailsComponent],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
+  selectedOrder: Order | null = null; 
   errorMessage: string = '';
   orderId: number = 0;
   isOrderDetailsVisible: boolean = false;
-  activeDropdown: number | null = null; // Track the active dropdown
+  assgintoDriver: boolean = false;
+  activeDropdown: number | null = null;
   dictionaries: any = dictionaries;
+  DictionariesEnum: any = DictionariesEnum;
 
   constructor(private masterService: MasterService) {}
+  cd = inject(ChangeDetectorRef);
+  handleDriverAssigned(orderId: number): void {
+    const order = this.orders.find(o => o.orderId === orderId);
+    if (order) {
+      order.shippingStatus = DictionariesEnum.ShippingStatus.InTransit;
+      this.cd.detectChanges();
+    }
+  }
 
-  // Method to assign a CSS class based on order status
+  displayOrderDetails(order: Order): void {
+    this.selectedOrder = order;
+    this.isOrderDetailsVisible = true;
+    this.closeDropdown();
+  }
+
+  closeOrderDetails(): void {
+    this.isOrderDetailsVisible = false;
+    this.selectedOrder = null;
+  }
+
+  assinToDriver(orderId: number): void {
+    this.assgintoDriver = true;
+    this.orderId = orderId;
+    this.closeDropdown();
+  }
+
+  toggleAssgintoDriverProduct(): void {
+    this.assgintoDriver = !this.assgintoDriver;
+  }
+
   getStatusClass(status: number): string {
     switch (status) {
-      case 0: return 'case-info';      // Processing
-      case 1: return 'case-success';   // Complete
-      case 2: return 'case-danger';    // Cancelled
-      case 3: return 'case-warning';   // Returned
+      case 0: return 'case-info';       // Processing
+      case 1: return 'case-success';    // Complete
+      case 2: return 'case-danger';     // Cancelled
+      case 3: return 'case-warning';    // Returned
       default: return '';
     }
   }
 
-  // Show order details
-  displayOrderDetails(orderId: number): void {
-    this.orderId = orderId;
-    this.isOrderDetailsVisible = true;
-    this.closeDropdown(); // Close dropdown after action
-  }
-
-  // Hide order details
-  closeOrderDetails(): void {
-    this.isOrderDetailsVisible = false;
-  }
-
-  // Cancel an order
-  cancelOrder(orderId: number): void {
-    // Implement cancel logic here, e.g., call a service to cancel the order
-    console.log(`Canceling order ${orderId}`);
-    this.closeDropdown(); // Close dropdown after action
-  }
-
-  // Mark an order as complete
-  completeOrder(orderId: number): void {
-    // Implement complete logic here, e.g., call a service to mark as complete
-    console.log(`Completing order ${orderId}`);
-    this.closeDropdown(); // Close dropdown after action
-  }
-
-  // Toggle dropdown visibility
   toggleDropdown(orderId: number): void {
     this.activeDropdown = this.activeDropdown === orderId ? null : orderId;
   }
 
-  // Close dropdown
   closeDropdown(): void {
     this.activeDropdown = null;
   }
@@ -74,13 +78,11 @@ export class OrdersComponent implements OnInit {
       next: (response: any) => {
         if (response.isSuccess) {
           this.orders = response.result;
-          console.log('Orders:', this.orders);
         } else {
           this.errorMessage = response.message || 'Failed to fetch orders.';
         }
       },
       error: (err: any) => {
-        console.error('Error fetching orders:', err);
         this.errorMessage = 'Error fetching orders.';
       }
     });

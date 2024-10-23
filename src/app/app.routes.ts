@@ -5,6 +5,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './Guard/auth.guard';
 import { ProductsComponent } from './pages/products/products.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ServicesPageComponent } from './pages/services-page/services-page.component';
+import { ServicePageComponent } from './pages/service-page/service-page.component';
 
 export const routes: Routes = [
   {    
@@ -35,12 +37,16 @@ export const routes: Routes = [
         component: OrdersComponent,
         canActivate: [authGuard] 
       },
-      // Add other protected routes here
-      // {
-      //   path: 'share/:id',
-      //   component: SharedComponent,
-      //   canActivate: [authGuard]
-      // }
+      {
+        path: 'services',
+        component: ServicesPageComponent,
+        canActivate: [authGuard] 
+      },
+      {
+        path: 'service/:id',
+        component: ServicePageComponent,
+        canActivate: [authGuard]
+      }
     ]
   }
 ];

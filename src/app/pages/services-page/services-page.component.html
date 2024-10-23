@@ -1,0 +1,52 @@
+<div class="services-container">
+    <h1>Admin Service Requests</h1>
+  
+    <!-- Filter Panel -->
+    <div class="filter-panel">
+      <label for="filterStatus">Filter by Status:</label>
+      <select id="filterStatus" [(ngModel)]="filterStatus">
+        <option value="">All</option>
+        <option value=0>New</option>
+        <option value=1>In Progress</option>
+        <option value=2>Resolved</option>
+        <option value=3>Rejected</option>
+      </select>
+  
+      <label for="filterRequestType">Filter by Request Type:</label>
+      <select id="filterRequestType" [(ngModel)]="filterRequestType">
+        <option value="">All</option>
+        <option value=0>Repair</option>
+        <option value=1>Return</option>
+        <option value=2>Sell</option>
+        <option value=3>Dontate</option>
+      </select>
+    </div>
+  
+    <!-- Service Request Table -->
+    <div class="service-table">
+      <div *ngFor="let request of filteredServiceRequests()" class="service-card" [routerLink]="['/service', request.requestId]">
+        <div class="card-header">
+          <span class="request-id">#{{ request.requestId }}</span>
+          <span class="request-status">{{ getStatusLabel(request.serviceRequestStatus) }}</span>
+        </div>
+        <div class="card-body" >
+          <p><strong>Product Details:</strong> {{ request.productDetails }}</p>
+          <p><strong>Requested Price:</strong> {{ request.requestedPrice | currency }}</p>
+          <p><strong>Purchase Price:</strong> {{ request.purchasePrice | currency }}</p>
+          <p><strong>Submission Date:</strong> {{ request.submissionDate | date: 'short' }}</p>
+          <p><strong>User Phone:</strong> {{ request.userPhone }}</p>
+          <p><strong>Request Type:</strong> {{ getRequestTypeLabel(request.requestType) }}</p>
+        </div>
+        <div class="card-footer">
+          <p><strong>Response Date:</strong> {{ request.responseDate ? (request.responseDate | date: 'short') : 'Pending' }}</p>
+          <p><strong>Response Details:</strong> {{ request.responseDetails ? request.responseDetails : 'No response yet' }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Requests Template -->
+    <ng-template #noRequests>
+      <p>No service requests available.</p>
+    </ng-template>
+  </div>
+  

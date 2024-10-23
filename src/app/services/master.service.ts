@@ -1,4 +1,4 @@
-import { PostCategoryDto, postDeactivateProduct, PostMaterialDto } from './../interfaces/interfaces';
+import { GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO } from './../interfaces/interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,9 +11,7 @@ import { style } from '@angular/animations';
 })
 export class MasterService {
   private apiUrl: string = environment.apiUrl; // Use the centralized API URL
-
   constructor(private http: HttpClient) {}
-
   getOrders(): Observable<ApiResponse<Order[]>> {
     return this.http.get<ApiResponse<Order[]>>(`${this.apiUrl}Order/GetOrders`);
   }
@@ -49,8 +47,48 @@ export class MasterService {
     const url =  `${this.apiUrl}Product/SearchProducts?Name=${searchTerm}&PageNumber=${pageNumber}&PageSize=${pageSize}`;
     return this.http.get<ApiResponse<Product[]>>(url);
   }
-  DeactivateProduct(postDeactivateProductdto: postDeactivateProduct): Observable<ApiResponse<Product>> {
-    const url = `${this.apiUrl}Product/DeactivateProduct`;
-    return this.http.post<ApiResponse<Product>>(url, postDeactivateProductdto ); 
+  DeactivateProduct(productId:number): Observable<ApiResponse<Product>> {
+    const url = `${this.apiUrl}Product/DeactivateProduct/${productId}`;
+    return this.http.post<ApiResponse<Product>>(url, {}); 
+  }
+  AssignDriver(Userid:string ,OrderId:number): Observable<ApiResponse<boolean>> {
+    const url = `${this.apiUrl}Order/AssignDriver/${Userid}/Order/${OrderId}`;
+    return this.http.post<ApiResponse<boolean>>(url, {}); 
+  }
+  getCurrentUserServices(): Observable<ApiResponse<GetServiceDto[]>> {
+    const url = `${this.apiUrl}ServiceRequest/GetCurrentUserServices`;
+    return this.http.get<ApiResponse<GetServiceDto[]>>(url);
+  }
+  getCurrentUserService(id:number): Observable<ApiResponse<GetServiceDto>> {
+    const url = `${this.apiUrl}ServiceRequest/GetCurrentUserService/${id}`;
+    return this.http.get<ApiResponse<GetServiceDto>>(url);
+  }
+  ResponseToRequest(id:number,postUpdate:PostupdateDto): Observable<ApiResponse<boolean>> {
+    const url = `${this.apiUrl}ServiceRequest/ResponseToRequest/${id}`;
+    return this.http.put<ApiResponse<boolean>>(url, postUpdate);
+  }
+  UpdateProduct(ProductId:number, updateProductDto:PostProductDto): Observable<ApiResponse<boolean>> {
+    const url = `${this.apiUrl}Product/UpdateProduct/${ProductId}`;
+    return this.http.put<ApiResponse<boolean>>(url, updateProductDto);
+  }
+  getSalesOverTime(): Observable<ApiResponse<SalesOverTimeDTO[]>> {
+    const url = `${this.apiUrl}Stats/SalesOverTime`;
+    return this.http.get<ApiResponse<SalesOverTimeDTO[]>>(url);
+  }
+  getOrdersByStatus(): Observable<ApiResponse<OrderByStatusDto[]>> {
+    const url = `${this.apiUrl}Stats/OrdersByStatus`;
+    return this.http.get<ApiResponse<OrderByStatusDto[]>>(url);
+  }
+  GetSalesByCategory(): Observable<ApiResponse<SalesByCategoryDto[]>> {
+    const url = `${this.apiUrl}Stats/SalesByCategory`;
+    return this.http.get<ApiResponse<SalesByCategoryDto[]>>(url);
+  }
+  GetNewUsersOverTime(): Observable<ApiResponse<NewUsersOverTimeDTO[]>> {
+    const url = `${this.apiUrl}Stats/NewUsersOverTime`;
+    return this.http.get<ApiResponse<NewUsersOverTimeDTO[]>>(url);
+  }
+  GetShippingStatus(): Observable<ApiResponse<GetShippingStatusDto[]>> {
+    const url = `${this.apiUrl}Stats/ShippingStatus`;
+    return this.http.get<ApiResponse<GetShippingStatusDto[]>>(url);
   }
 }
