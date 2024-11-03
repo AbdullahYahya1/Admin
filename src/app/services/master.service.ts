@@ -1,4 +1,4 @@
-import { GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO } from './../interfaces/interfaces';
+import { GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO, Stats } from './../interfaces/interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -90,5 +90,10 @@ export class MasterService {
   GetShippingStatus(): Observable<ApiResponse<GetShippingStatusDto[]>> {
     const url = `${this.apiUrl}Stats/ShippingStatus`;
     return this.http.get<ApiResponse<GetShippingStatusDto[]>>(url);
+  }
+
+  GetStats(): Observable<ApiResponse<Stats>> {
+    const url = `${this.apiUrl}Stats`;
+    return this.http.get<ApiResponse<Stats>>(url);
   }
 }

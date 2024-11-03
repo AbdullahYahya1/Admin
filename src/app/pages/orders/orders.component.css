@@ -21,7 +21,7 @@ th, td {
 }
 
 th {
-    background-color: #007bff; /* Changed from green to blue */
+    background-color: #5f5f62; /* Changed from green to blue */
     color: white;
     font-weight: bold;
 }
@@ -35,15 +35,6 @@ tr:nth-child(even) {
     display: none;
 }
 
-/* Additional styling for table headers */
-h2 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 1.8em;
-    color: #333;
-    border-bottom: 2px solid #007bff; /* Changed from green to blue */
-    padding-bottom: 5px;
-}
 
 /* Custom colors for different cases */
 .case-success {
@@ -62,8 +53,8 @@ h2 {
 }
 
 .case-info {
-    background-color: #d1ecf1; /* Light blue */
-    color: #0c5460; /* Dark blue */
+    background-color: #5f5f62; /* Light blue */
+    color: #ffffff; /* Dark blue */
 }
 
 /* Style for dropdown container */

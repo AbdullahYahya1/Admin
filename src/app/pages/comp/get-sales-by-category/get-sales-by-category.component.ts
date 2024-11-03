@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MasterService } from '../../../services/master.service';
-import { SalesByCategoryDto } from '../../../interfaces/interfaces';
+import { Color, SalesByCategoryDto } from '../../../interfaces/interfaces';
 import { CanvasJS, CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 @Component({
@@ -11,10 +11,8 @@ import { CanvasJS, CanvasJSAngularChartsModule } from '@canvasjs/angular-charts'
   styleUrl: './get-sales-by-category.component.css'
 })
 export class GetSalesByCategoryComponent implements OnInit {
-  chart: any;  // To store the CanvasJS chart instance
-
+  chart: any; 
   constructor(private masterService: MasterService) {}
-
   ngOnInit(): void {
     this.masterService.GetSalesByCategory().subscribe((response) => {
       if (response.isSuccess && response.result) {
@@ -31,6 +29,7 @@ export class GetSalesByCategoryComponent implements OnInit {
   renderChart(dataPoints: any): void {
     this.chart = new CanvasJS.Chart("categoryChartContainer", {
       animationEnabled: true,
+      theme:"dark2",
       title: {
         text: "Total Sales by Category"
       },

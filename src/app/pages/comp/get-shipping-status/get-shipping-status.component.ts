@@ -33,6 +33,8 @@ export class GetShippingStatusComponent implements OnInit {
       title: {
         text: "Shipping Status"
       },
+      theme:"dark2",
+
       data: [{
         type: "pie",
         startAngle: -90,

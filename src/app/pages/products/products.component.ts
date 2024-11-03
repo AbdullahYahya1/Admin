@@ -93,6 +93,7 @@ export class ProductsComponent implements OnInit {
 
   ShowForm: boolean = false;
   newImages: File[] = [];
+dropdownOpen: any;
   constructor(private masterService: MasterService) {}
 
   ngOnInit(): void {
@@ -290,7 +291,9 @@ export class ProductsComponent implements OnInit {
       }
     );
   }
-  
+  toggleDropdownMenu() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
   close(): void {
     this.ShowForm = false;
   }

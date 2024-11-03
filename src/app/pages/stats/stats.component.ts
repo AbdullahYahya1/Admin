@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MasterService } from '../../services/master.service';
-import { Order } from '../../interfaces/interfaces';
+import { ApiResponse, Order, Stats } from '../../interfaces/interfaces';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { OrdersByStatusComponent } from "../comp/orders-by-status/orders-by-status.component";
 import { GetSalesOverTimeComponent } from "../comp/get-sales-over-time/get-sales-over-time.component";
@@ -16,8 +16,25 @@ import { GetShippingStatusComponent } from '../comp/get-shipping-status/get-ship
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.css'
 })
-export class StatsComponent implements AfterViewInit  {
+export class StatsComponent implements AfterViewInit , OnInit {
   constructor(private masterService: MasterService) {}
+  stats: any;
+  ngOnInit(): void {
+    var stats = this.masterService.GetStats().subscribe(
+      {
+        next: (response: ApiResponse<Stats>) => {
+          if (response) {
+            this.stats = response.result;
+            console.log('Stats:', response);
+          } else {
+            console.error('Error:', response);
+          }
+        },
+        error: (err: any) => {
+          console.error('Error fetching stats:', err);
+      }
+    })
+  }
   ngAfterViewInit(): void {
     setInterval(() => {
       const canvasJsCreditLinks = document.querySelectorAll('.canvasjs-chart-credit');

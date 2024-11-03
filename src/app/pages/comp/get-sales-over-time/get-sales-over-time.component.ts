@@ -33,7 +33,7 @@ export class GetSalesOverTimeComponent implements OnInit {
   // Function to render the chart with dynamic data
   renderChart(dataPoints: any): void {
     this.chart = new CanvasJS.Chart("salesChartContainer", {
-      theme: "light2",
+      theme:"dark2",
       animationEnabled: true,
       zoomEnabled: true,
       title: { text: "Sales Over Time" },

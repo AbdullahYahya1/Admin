@@ -1,7 +1,5 @@
 export const environment = {
     production: false, 
-    apiUrl: 'https://localhost:7139/api/',
-    Url: 'https://localhost:7139/',
-
+    apiUrl: 'http://www.finprojectapi.somee.com/api/',
+    Url: 'http://www.finprojectapi.somee.com/',
   };
-  

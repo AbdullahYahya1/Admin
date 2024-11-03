@@ -1,32 +1,37 @@
+<h1>Admin Service Requests</h1>
+
 <div class="services-container">
-    <h1>Admin Service Requests</h1>
   
     <!-- Filter Panel -->
     <div class="filter-panel">
-      <label for="filterStatus">Filter by Status:</label>
-      <select id="filterStatus" [(ngModel)]="filterStatus">
-        <option value="">All</option>
-        <option value=0>New</option>
-        <option value=1>In Progress</option>
-        <option value=2>Resolved</option>
-        <option value=3>Rejected</option>
-      </select>
+<div c>
+  <label for="filterStatus">Filter by Status:</label>
+  <select id="filterStatus" [(ngModel)]="filterStatus">
+    <option value="">All</option>
+    <option value=0>New</option>
+    <option value=1>In Progress</option>
+    <option value=2>Resolved</option>
+    <option value=3>Rejected</option>
+  </select>
+</div>
   
-      <label for="filterRequestType">Filter by Request Type:</label>
-      <select id="filterRequestType" [(ngModel)]="filterRequestType">
-        <option value="">All</option>
-        <option value=0>Repair</option>
-        <option value=1>Return</option>
-        <option value=2>Sell</option>
-        <option value=3>Dontate</option>
-      </select>
-    </div>
-  
+<div>
+  <label for="filterRequestType">Filter by Request Type:</label>
+  <select id="filterRequestType" [(ngModel)]="filterRequestType">
+    <option value="">All</option>
+    <option value=0>Repair</option>
+    <option value=1>Return</option>
+    <option value=2>Sell</option>
+    <option value=3>Dontate</option>
+  </select>
+</div>
+
+</div>
     <!-- Service Request Table -->
     <div class="service-table">
       <div *ngFor="let request of filteredServiceRequests()" class="service-card" [routerLink]="['/service', request.requestId]">
         <div class="card-header">
-          <span class="request-id">#{{ request.requestId }}</span>
+          <span class="request-id"></span>
           <span class="request-status">{{ getStatusLabel(request.serviceRequestStatus) }}</span>
         </div>
         <div class="card-body" >

@@ -1,31 +1,19 @@
-/* Container for the main content */
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    height: 1000px;
-}
 
-/* Flexbox layout for the bar to place buttons and search bar on the same line */
 .bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    margin-right: 30px;
     gap: 20px;
     white-space: nowrap;
     overflow: hidden;
     flex-wrap: wrap;
 }
-
-/* Button group layout */
 .button-group {
     display: flex;
     gap: 1rem;
-    flex: 1; /* Ensure button group takes available space */
+    flex: 1; 
 }
-
 .button {
     padding: 0.75rem 1.25rem;
     background-color: #007bff;
@@ -37,20 +25,16 @@
     transition: background-color 0.3s ease, transform 0.2s;
     white-space: nowrap;
 }
-
 .button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
 }
-
-/* Search bar styling */
 .search-bar {
     flex-grow: 1;
-    max-width: 100%;
+    max-width: 50%;
     margin-left: 20px;
     margin-right: 30px;
 }
-
 .search-bar input[type="text"] {
     width: 100%;
     padding: 0.75rem;
@@ -65,8 +49,6 @@
     box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
-
-/* Product list styling with grid layout for responsiveness */
 .product-list ul {
     list-style-type: none;
     padding: 0;
@@ -75,8 +57,6 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
-
-/* Product card styling */
 .product {
     padding: 20px;
     border-radius: 8px;
@@ -87,13 +67,10 @@
     background-color: #fff;
     transition: box-shadow 0.3s ease, transform 0.2s;
 }
-
 .product:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     transform: translateY(-4px);
 }
-
-/* Product details section */
 .product-details h3 {
     margin: 0 0 10px;
     color: #333;
@@ -103,22 +80,18 @@
     margin: 5px 0;
     color: #555;
 }
-
-/* Product price and actions alignment */
 .product-price-actions {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    justify-content: space-between; 
+    height: 100%;
 }
 
-/* Product price styling */
 .product-price {
     font-size: 24px;
     color: #007bff;
-    margin-bottom: 10px;
+    text-align: center;
 }
-
-/* Action icons for editing and deleting */
 .actions {
     display: flex;
     gap: 10px;
@@ -147,8 +120,8 @@
     .button-group {
         flex-wrap: wrap;
         justify-content: center;
-        width: 100%; /* Ensure button group takes full width */
-        margin-bottom: 10px; /* Space between buttons and search bar */
+        width: 100%; 
+        margin-bottom: 10px;
     }
 
     .search-bar {
@@ -156,24 +129,21 @@
         align-items: center;
         justify-content: center;
         width: 60%;
-        margin-left: 0; /* Remove left margin to center the search bar */
-        margin-right: 0; /* Remove right margin for full-width search bar */
+        margin-left: 0;
+        margin-right: 0; 
     }
 }
-/* Full-page overlay for the modal */
 .custom-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); /* Softer overlay */
+    background-color: rgba(0, 0, 0, 0.6); 
     z-index: 999;
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
-
-/* Centered container for the modal */
 .custom-modal-container {
     position: fixed;
     top: 50%;
@@ -186,21 +156,17 @@
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
-
-/* Modal content (form) */
 .custom-modal-content {
     background-color: #fff;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Softer shadow */
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); 
     width: 100%;
     box-sizing: border-box;
     max-height: 80vh;
     overflow-y: auto;
-    animation: fadeInScale 0.4s ease-in-out; /* Fade-in and scale animation */
+    animation: fadeInScale 0.4s ease-in-out; 
 }
-
-/* Animation for modal appearance */
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -211,8 +177,6 @@
         transform: scale(1);
     }
 }
-
-/* Close button styling */
 .custom-close-button {
     position: absolute;
     top: 10px;
@@ -224,12 +188,9 @@
     color: #333;
     transition: color 0.3s ease;
 }
-
 .custom-close-button:hover {
     color: #000;
 }
-
-/* Input field styling */
 input[type="text"], input[type="number"], input[type="file"], select, textarea {
     width: 100%;
     padding: 12px;
@@ -240,14 +201,11 @@ input[type="text"], input[type="number"], input[type="file"], select, textarea {
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
     border-color: #007bff;
     box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
-
-/* Button styling */
 button {
     margin-right: 10px;
     padding: 10px 18px;
@@ -259,16 +217,12 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 16px;
 }
-
 button:hover {
     background-color: #0056b3;
 }
-
 button:active {
     transform: scale(0.98);
 }
-
-/* Label styling */
 label {
     font-size: 16px;
     font-weight: 500;
@@ -276,28 +230,22 @@ label {
     margin-bottom: 6px;
     display: block;
 }
-
-/* Headings */
 h3 {
     color: #333;
     font-size: 24px;
     margin-bottom: 20px;
 }
-
-/* Image preview */
 .image-preview {
     display: inline-block;
     margin: 5px;
     position: relative;
 }
-
 .image-preview img {
     max-width: 100px;
     max-height: 100px;
     border-radius: 4px;
     border: 1px solid #ddd;
 }
-
 .remove-image {
     position: absolute;
     top: 0;
@@ -309,18 +257,14 @@ h3 {
     border-radius: 50%;
     padding: 2px 5px;
 }
-
 .remove-image:hover {
     background: rgba(255, 0, 0, 1);
 }
-
 .product-images {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
-
-/* Textarea styling */
 textarea {
     width: 100%;
     padding: 10px;
@@ -329,22 +273,19 @@ textarea {
     border-radius: 6px;
     border: 1px solid #ddd;
 }
-
-/* Responsive adjustments */
 @media (max-width: 600px) {
     .custom-modal-container {
         max-width: 100%;
         padding: 10px;
     }
 }
-/* Full-page overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.6); 
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -352,21 +293,17 @@ textarea {
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
-
-/* Centered modal container */
 .modal-container {
     background-color: white;
     width: 100%;
     max-width: 400px;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Softer shadow */
-    animation: fadeInScale 0.3s ease-in-out; /* Add fade-in and scale animation */
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    animation: fadeInScale 0.3s ease-in-out; 
     position: relative;
     text-align: center;
 }
-
-/* Modal animation */
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -377,8 +314,6 @@ textarea {
         transform: scale(1);
     }
 }
-
-/* Close button */
 .close-button {
     position: absolute;
     top: 10px;
@@ -390,26 +325,19 @@ textarea {
     color: #333;
     transition: color 0.3s ease;
 }
-
 .close-button:hover {
     color: #000;
 }
-
-/* Headings */
 h3 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
-
-/* Product name */
 p {
     font-size: 18px;
     color: #555;
     margin-bottom: 20px;
 }
-
-/* Modal action buttons */
 .modal-actions {
     display: flex;
     justify-content: center;
@@ -424,33 +352,67 @@ p {
     font-size: 16px;
     transition: background-color 0.3s ease, transform 0.2s;
 }
-
 .confirm-button {
-    background-color: #ff0000; /* Red for the confirm button */
+    background-color: #ff0000; 
     color: white;
 }
-
 .confirm-button:hover {
-    background-color: #cc0000; /* Darker red on hover */
+    background-color: #cc0000; 
 }
-
 .cancel-button {
     background-color: #ccc;
     color: black;
 }
-
 .cancel-button:hover {
-    background-color: #999; /* Darker grey on hover */
+    background-color: #999; 
 }
-
 button:active {
-    transform: scale(0.98); /* Slight shrink effect on click */
+    transform: scale(0.98); 
 }
-
-/* Responsive adjustments */
 @media (max-width: 600px) {
     .modal-container {
         max-width: 90%;
         padding: 15px;
     }
+}
+.dropdown-toggle {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.dropdown-content.show {
+    display: block;
+    opacity: 1;
+}
+.dropdown-content .dropdown-item {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border: none;
+    width: 100%;
+    background-color: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+.dropdown-content .dropdown-item:last-child {
+    border-bottom: none;
+}
+.dropdown-content .dropdown-item:hover {
+    background-color: #ddd;
 }

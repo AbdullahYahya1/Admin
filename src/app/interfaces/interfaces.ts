@@ -168,6 +168,7 @@ export interface PostBrandDto {
 export interface PostCategoryDto {
   nameAr: string;
   nameEn: string;
+  imagesString64: string;
 }
 
 export interface PostMaterialDto {
@@ -224,7 +225,18 @@ export interface GetShippingStatusDto{
   shippingStatus:string; 
   count:number;
 }
-// Enums and Additional Types
+export interface Stats{
+  newOrdersCountToday:number;
+  newUsersCountToday:number;
+  totalOrders:number;
+  totalSales:number;
+  pendingServiceRequests:number;
+  completedOrdersToday:number;
+  productsInStock:number;
+  cancelledOrders:number;
+  totalWishlistItems:number;
+  totalRevenueThisMonth:number;
+}
 
 export enum ProductStatus {
   Active = 0,

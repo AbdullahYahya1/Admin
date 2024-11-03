@@ -78,6 +78,7 @@ export class OrdersComponent implements OnInit {
       next: (response: any) => {
         if (response.isSuccess) {
           this.orders = response.result;
+          console.log('Orders:', this.orders);  
         } else {
           this.errorMessage = response.message || 'Failed to fetch orders.';
         }
@@ -88,3 +89,4 @@ export class OrdersComponent implements OnInit {
     });
   }
 }
+ 
