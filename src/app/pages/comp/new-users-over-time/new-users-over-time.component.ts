@@ -42,7 +42,7 @@ export class NewUsersOverTimeComponent implements OnInit {
       title: {
         text: "New Users Over Time"
       },
-      theme:"dark2",
+      theme:"dark1",
 
       axisY: {
         title: "New Users",

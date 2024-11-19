@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterService } from '../../services/master.service';
 import { dictionaries, DictionariesEnum, PostupdateDto } from '../../interfaces/interfaces';
@@ -18,7 +18,6 @@ export class ServicePageComponent {
   responseDetails: string = '';
   serviceStatus: number | null = null;
   dictionaries: any = dictionaries;
-  
 
   serviceStatusList = Object.entries(dictionaries.ServiceRequestStatus).map(([key, value]) => ({
     id: Number(key),
@@ -33,7 +32,9 @@ export class ServicePageComponent {
     this.serviceId = this.route.snapshot.paramMap.get('id');
     this.fetchServiceData();
   }
-
+  close(){
+    this.router.navigate(['/services']);
+  }
   fetchServiceData() {
     this.masterService.getCurrentUserService(Number(this.serviceId)).subscribe({
       next: (response: any) => {

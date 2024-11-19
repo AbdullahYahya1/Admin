@@ -29,7 +29,7 @@ export class GetSalesByCategoryComponent implements OnInit {
   renderChart(dataPoints: any): void {
     this.chart = new CanvasJS.Chart("categoryChartContainer", {
       animationEnabled: true,
-      theme:"dark2",
+      theme:"dark1",
       title: {
         text: "Total Sales by Category"
       },

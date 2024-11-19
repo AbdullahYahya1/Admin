@@ -16,8 +16,6 @@
 }
 .button {
     padding: 0.75rem 1.25rem;
-    background-color: #007bff;
-    color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -64,21 +62,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--overlay-deep);
     transition: box-shadow 0.3s ease, transform 0.2s;
-}
-.product:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-4px);
+
 }
 .product-details h3 {
     margin: 0 0 10px;
-    color: #333;
 }
 
 .product-details p {
     margin: 5px 0;
-    color: #555;
 }
 .product-price-actions {
     display: flex;
@@ -89,7 +82,6 @@
 
 .product-price {
     font-size: 24px;
-    color: #007bff;
     text-align: center;
 }
 .actions {
@@ -139,26 +131,32 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); 
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.747); 
+    z-index: 1999;
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
+  
+
+
 }
 .custom-modal-container {
+
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 19999;
     width: 100%;
     max-width: 600px;
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease;
+
 }
 .custom-modal-content {
-    background-color: #fff;
-    padding: 25px;
+    background-color:var(--overlay-deep);
+    height: 100%;
+    padding-right: 15px;
     border-radius: 12px;
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); 
     width: 100%;
@@ -167,6 +165,15 @@
     overflow-y: auto;
     animation: fadeInScale 0.4s ease-in-out; 
 }
+.custom-modal-content::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  .custom-modal-content::-webkit-scrollbar-track {
+    background: #1e1e24;
+  }
+  .custom-modal-content::-webkit-scrollbar-thumb {
+    background: #C9007E;
+  }
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -185,12 +192,8 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #333;
-    transition: color 0.3s ease;
 }
-.custom-close-button:hover {
-    color: #000;
-}
+
 input[type="text"], input[type="number"], input[type="file"], select, textarea {
     width: 100%;
     padding: 12px;
@@ -202,7 +205,6 @@ input[type="text"], input[type="number"], input[type="file"], select, textarea {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
-    border-color: #007bff;
     box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
@@ -210,28 +212,25 @@ button {
     margin-right: 10px;
     padding: 10px 18px;
     border-radius: 6px;
-    background-color: #007bff;
+    background-color: var(--less-black);
     color: white;
     border: none;
     cursor: pointer;
+
     transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 16px;
 }
-button:hover {
-    background-color: #0056b3;
-}
+
 button:active {
     transform: scale(0.98);
 }
 label {
     font-size: 16px;
     font-weight: 500;
-    color: #555;
     margin-bottom: 6px;
     display: block;
 }
 h3 {
-    color: #333;
     font-size: 24px;
     margin-bottom: 20px;
 }
@@ -251,7 +250,6 @@ h3 {
     top: 0;
     right: 0;
     background: rgba(255, 0, 0, 0.8);
-    color: white;
     border: none;
     cursor: pointer;
     border-radius: 50%;
@@ -280,13 +278,14 @@ textarea {
     }
 }
 .modal-overlay {
+    background-color: var(--overlay-deep);
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); 
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.822); 
+    z-index: 1999;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -294,7 +293,7 @@ textarea {
     transition: opacity 0.3s ease-in-out;
 }
 .modal-container {
-    background-color: white;
+    background-color: var(--overlay-deep);
     width: 100%;
     max-width: 400px;
     padding: 20px;
@@ -322,20 +321,15 @@ textarea {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #333;
     transition: color 0.3s ease;
 }
-.close-button:hover {
-    color: #000;
-}
+
 h3 {
     font-size: 24px;
-    color: #333;
     margin-bottom: 20px;
 }
 p {
     font-size: 18px;
-    color: #555;
     margin-bottom: 20px;
 }
 .modal-actions {
@@ -354,14 +348,13 @@ p {
 }
 .confirm-button {
     background-color: #ff0000; 
-    color: white;
 }
 .confirm-button:hover {
     background-color: #cc0000; 
 }
 .cancel-button {
-    background-color: #ccc;
-    color: black;
+    background-color: #000000;
+    color: var(--white);
 }
 .cancel-button:hover {
     background-color: #999; 
@@ -376,8 +369,6 @@ button:active {
     }
 }
 .dropdown-toggle {
-    background-color: #4CAF50;
-    color: white;
     padding: 10px 20px;
     font-size: 16px;
     border: none;
@@ -387,7 +378,6 @@ button:active {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1000;
@@ -399,13 +389,11 @@ button:active {
     opacity: 1;
 }
 .dropdown-content .dropdown-item {
-    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     border: none;
     width: 100%;
-    background-color: #ffffff;
     text-align: left;
     cursor: pointer;
     border-bottom: 1px solid #ccc;

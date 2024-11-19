@@ -2,16 +2,17 @@
   <div class="service-page">
     <h2>Service Request Details</h2>
     <div class="request-details">
-      <p><strong>Product Details:</strong> {{service?.productDetails}}</p>
-      <p><strong>Requested Price:</strong> {{service?.requestedPrice | currency}}</p>
-      <p><strong>Purchase Price:</strong> {{service?.purchasePrice | currency}}</p>
-      <p><strong>Submission Date:</strong> {{service?.submissionDate | date:'long'}}</p>
-      <p><strong>User Phone Number:</strong> {{service?.userPhone | date:'long'}}</p>
+      <p *ngIf="service?.productDetails"><strong>Product Details:</strong> {{ service.productDetails }}</p>
+      <p *ngIf="service?.requestedPrice !== null"><strong>Requested Price:</strong> {{ service.requestedPrice | currency }}</p>
+      <p *ngIf="service?.purchasePrice !== null"><strong>Purchase Price:</strong> {{ service.purchasePrice | currency }}</p>
+      <p *ngIf="service?.submissionDate"><strong>Submission Date:</strong> {{ service.submissionDate | date: 'long' }}</p>
+      <p *ngIf="service?.userPhone"><strong>User Phone Number:</strong> {{ service.userPhone }}</p>
 
-      <p><strong>Service Status:</strong>
-        {{ dictionaries.ServiceRequestStatus[service?.serviceRequestStatus]?.en || 'Status Not Available' }}
+      <p *ngIf="service?.serviceRequestStatus !== null"><strong>Service Status:</strong>
+        {{ dictionaries.ServiceRequestStatus[service.serviceRequestStatus]?.en || 'Status Not Available' }}
       </p>
-          </div>
+    </div>
+
     <div class="service-response">
       <h3>Respond to the Request</h3>
       <form #responseForm="ngForm" (ngSubmit)="submitResponse()">
@@ -27,9 +28,11 @@
             </option>
           </select>
         </div>
+        <div class="buttons">
         <button type="submit" [disabled]="!responseForm.valid">Submit Response</button>
+        <button class="back" type="button" (click)="close()">Back</button>
+      </div>
       </form>
     </div>
   </div>
-  
 </div>

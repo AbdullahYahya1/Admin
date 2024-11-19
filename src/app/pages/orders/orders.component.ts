@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject, OnInit } from '@angular/core';
 import { MasterService } from '../../services/master.service';
 import { dictionaries, DictionariesEnum, Order } from '../../interfaces/interfaces';
 import { CommonModule, JsonPipe } from '@angular/common';
@@ -24,6 +24,8 @@ export class OrdersComponent implements OnInit {
   dictionaries: any = dictionaries;
   DictionariesEnum: any = DictionariesEnum;
 
+
+
   constructor(private masterService: MasterService) {}
   cd = inject(ChangeDetectorRef);
   handleDriverAssigned(orderId: number): void {
@@ -33,7 +35,13 @@ export class OrdersComponent implements OnInit {
       this.cd.detectChanges();
     }
   }
-
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown') ) {
+      this.closeDropdown();
+    }
+  }
   displayOrderDetails(order: Order): void {
     this.selectedOrder = order;
     this.isOrderDetailsVisible = true;

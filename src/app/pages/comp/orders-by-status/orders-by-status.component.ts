@@ -38,7 +38,7 @@ export class OrdersByStatusComponent implements OnInit {
       title: {
         text: "Orders by Status"
       },
-      theme:"dark2",
+      theme:"dark1",
       data: [{
         type: "pie",
         startAngle: -90,

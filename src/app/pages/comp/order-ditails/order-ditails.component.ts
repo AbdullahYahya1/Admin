@@ -10,17 +10,15 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './order-ditails.component.html',
   styleUrls: ['./order-ditails.component.css']
 })
-export class OrderDitailsComponent implements OnInit {
+export class OrderDitailsComponent  {
   @Input() order!: Order;
-  @Output() closeOrder = new EventEmitter<void>();
+  @Output() closeOrderDetails = new EventEmitter<void>();
   public Url: string = environment.Url;
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('Order:', this.order);
-  }
+
 
   close(): void {
-    this.closeOrder.emit();
+    this.closeOrderDetails.emit();
   }
 }

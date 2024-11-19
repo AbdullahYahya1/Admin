@@ -33,7 +33,7 @@ export class GetShippingStatusComponent implements OnInit {
       title: {
         text: "Shipping Status"
       },
-      theme:"dark2",
+      theme:"dark1",
 
       data: [{
         type: "pie",

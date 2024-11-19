@@ -1,3 +1,6 @@
+.container{
+    height: 100vh;
+}
 /* Style for error message */
 .error-message {
     color: #ff4d4d;
@@ -27,7 +30,7 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--overlay-deep);
 }
 
 /* Hidden class to hide rows */
@@ -35,40 +38,44 @@ tr:nth-child(even) {
     display: none;
 }
 
-
+.case-success, .case-warning, .case-danger, .case-info {
+    color: rgb(0, 0, 0);
+    font-weight: 550;
+}
 /* Custom colors for different cases */
 .case-success {
     background-color: #0bff44; /* Light green */
-    color: #155724; /* Dark green */
 }
 
 .case-warning {
     background-color: #fff3cd; /* Light yellow */
-    color: #856404; /* Dark yellow */
 }
 
 .case-danger {
     background-color: red; /* Light red */
-    color: #721c24; /* Dark red */
 }
 
 .case-info {
-    background-color: #5f5f62; /* Light blue */
-    color: #ffffff; /* Dark blue */
+    background-color: var(--orange);
 }
-
+.dropdownTd{
+    border: none;
+    background-color: var(--container-dark);    
+}
 /* Style for dropdown container */
 .dropdown {
   position: relative;
   display: inline-block;
+  text-align: center;
 }
 
 /* Style for dropdown button (three dots) */
-.dropdown-button {
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
+.dropdown-button  {
+font-size: 30px;
+cursor: pointer;
+background-color: inherit;
+border: none;
+color: var(--white);
 }
 
 /* Style for dropdown menu */
@@ -99,10 +106,8 @@ tr:nth-child(even) {
     width: 100px;
 }
 .center{
-    justify-content: center;
-    align-items: center;
-    display: flex;
     text-align: center;
+    margin-inline:auto;
 }
 .dropdown-menu button:hover {
   background-color: #f0f0f0;

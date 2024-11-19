@@ -20,7 +20,7 @@
 
 .filter-panel label {
     font-weight: 600;
-    color: #444;
+    color: var(--white);
     margin-bottom: 5px;
     display: inline-block;
 }
@@ -35,7 +35,7 @@
 }
 
 .filter-panel select:focus {
-    border-color: #007bff;
+    border-color: #ffffff;
     outline: none;
     background-color: #ffffff;
 }
@@ -45,19 +45,27 @@
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
-
+.green{
+    color: green;
+}
+.orange{
+    color: var(--orange);
+}
 .service-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--overlay-deep);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor:pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    opacity: 0.9;
 }
 
 .card-header {
@@ -77,17 +85,17 @@
 }
 
 .card-footer {
-    margin-top: 15px;
+    margin-top: 30px;
     padding: 10px;
-    background-color: #f7f7f7;
+    background-color: var(--less-black);
     border-top: 1px solid #eaeaea;
     border-radius: 0 0 8px 8px;
     font-size: 13px;
-    color: #555;
+    color: #ffffff;
 }
 
 .request-id {
-    color: #007bff;
+    color: #ffffff;
     font-weight: bold;
 }
 

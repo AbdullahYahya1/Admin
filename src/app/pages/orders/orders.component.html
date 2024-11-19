@@ -9,7 +9,6 @@
       <th>Transaction Status</th>
       <th>Shipping Status</th>
       <th>Status</th>
-      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -17,25 +16,25 @@
       <td>{{ order.shippingAddress.city }}</td>
       <td>{{ order.createdAt | date }}</td>
       <td>{{ order.totalPrice | currency }}</td>
-      <td class="center">
-        <div [ngClass]="order.transaction?.transactionStatus === 0 ? 'case-success' : 'case-danger'" class="cc">
+      <td >
+        <div [ngClass]="order.transaction?.transactionStatus === 0 ? 'case-success' : 'case-danger'" class="cc center">
           {{ order.transaction == null 
             ? 'Not Payed' 
             : dictionaries.TransactionStatus[order.transaction.transactionStatus]?.en }}
         </div>
-      </td>
+      </td> 
       <td>{{ dictionaries.ShippingStatus[order.shippingStatus].en }}</td>
-      <td class="center">
-        <div [ngClass]="getStatusClass(order.status)" class="cc">
+      <td >
+        <div [ngClass]="getStatusClass(order.status)" class="cc center">
           {{ dictionaries.OrderStatus[order.status].en }}
         </div>
       </td>
-      <td>
+      <td class="dropdownTd">
         <div class="dropdown">
           <button (click)="toggleDropdown(order.orderId)" class="dropdown-button">⋮</button>
           <div *ngIf="activeDropdown === order.orderId" class="dropdown-menu">
-            <button (click)="displayOrderDetails(order)">Show Order Details</button>
-            <button *ngIf="order.status === 0 && order.shippingStatus === 0" (click)="assinToDriver(order.orderId)">Assign Order to Driver</button>
+            <button (click)="displayOrderDetails(order)">Details</button>
+            <button *ngIf="order.status === 0 && order.shippingStatus === 0" (click)="assinToDriver(order.orderId)">Assign Order</button>
           </div>
         </div>
       </td>
@@ -43,7 +42,7 @@
   </tbody>
 </table>
 <div *ngIf="isOrderDetailsVisible">
-  <app-order-ditails *ngIf="selectedOrder" [order]="selectedOrder" (closeOrder)="closeOrderDetails()"></app-order-ditails>
+  <app-order-ditails *ngIf="selectedOrder" [order]="selectedOrder" (closeOrderDetails)="closeOrderDetails()"></app-order-ditails>
 </div>
 <app-assginto-driver 
   *ngIf="assgintoDriver" 

@@ -1,4 +1,4 @@
- 
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -11,7 +11,6 @@
     transition: opacity 0.3s ease;
 }
 
- 
 .add-style-container {
     position: fixed;
     top: 50%;
@@ -25,9 +24,8 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
- 
 .add-style-form {
-    background-color: #fff;
+    background-color: var(--overlay-deep);
     padding: 30px;  
     border-radius: 16px;  
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);  
@@ -37,9 +35,9 @@
     max-height: 80vh;
     overflow-y: auto;
     animation: fadeInScale 0.4s ease-in-out;
+
 }
 
- 
 .close-button {
     position: absolute;
     top: 12px;
@@ -48,19 +46,18 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
     transition: color 0.3s ease;
 }
 
 .close-button:hover {
-    color: #000;
+    color: var(--background-darkest);
 }
 
 input[type="text"], select {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 1px solid var(--good-gray);
     border-radius: 6px;
     font-size: 16px;
     box-sizing: border-box;
@@ -72,12 +69,12 @@ input[type="text"]:focus, select:focus {
     box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
+
 button {
     margin-right: 10px;
     padding: 12px 18px; 
     border-radius: 8px; 
-    background-color: #007bff;
-    color: white;
+    background-color: var(--good-gray);
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -86,7 +83,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #a4a4a4;
     box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.3); 
 }
 
@@ -95,14 +92,13 @@ button:active {
 }
 
 h3 {
-    color: #333;
     font-size: 26px;
     margin-bottom: 25px;
 }
+
 label {
     font-size: 16px;
     font-weight: 500;
-    color: #555;
     margin-bottom: 6px;
     display: block;
 }
