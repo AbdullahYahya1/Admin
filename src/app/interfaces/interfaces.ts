@@ -91,7 +91,18 @@ export interface Brand {
 export interface OrderItem {
   product: Product;
 }
-
+export interface NormalUser {
+  userId: string;
+  isActive: boolean;
+  mobileNumber: string;
+}
+export interface Driver {
+  userId: string;
+  email: string;
+  userName: string;
+  isActive: boolean;
+  mobileNumber: string;
+}
 export interface Transaction {
   transactionDate: string;
   totalPrice: number;
@@ -347,7 +358,7 @@ export const dictionaries = {
       0: { en: "Repair", ar: "إصلاح" },
       1: { en: "Return", ar: "إرجاع" },
       2: { en: "Sell", ar: "بيع" },
-      3: { en: "Buy", ar: "شراء" },
+      3: { en: "Dontate ", ar: "تبرع" },
   },
   ProductStatus: {
       0: { en: "Active", ar: "نشط" },

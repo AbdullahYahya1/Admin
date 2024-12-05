@@ -2,12 +2,27 @@
   <div class="service-page">
     <h2>Service Request Details</h2>
     <div class="request-details">
+    <p *ngIf="service.requestType !== null"><strong>Request Type:</strong> {{ getRequestTypeLabel(service.requestType) }}</p>
       <p *ngIf="service?.productDetails"><strong>Product Details:</strong> {{ service.productDetails }}</p>
       <p *ngIf="service?.requestedPrice !== null"><strong>Requested Price:</strong> {{ service.requestedPrice | currency }}</p>
       <p *ngIf="service?.purchasePrice !== null"><strong>Purchase Price:</strong> {{ service.purchasePrice | currency }}</p>
       <p *ngIf="service?.submissionDate"><strong>Submission Date:</strong> {{ service.submissionDate | date: 'long' }}</p>
       <p *ngIf="service?.userPhone"><strong>User Phone Number:</strong> {{ service.userPhone }}</p>
-
+      <div *ngIf="service?.images && service.images.length > 0; else noImages">
+      <h3>Product Images</h3>
+      <div >
+        <div class="image-cards">
+          <div class="image-card" *ngFor="let img of service.images">
+            <img [src]="Url + '/' + img.imageUrl" [alt]="img.description || 'Product Image'" />
+            <p *ngIf="img.description">{{ img.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      <ng-template #noImages>
+        <p>No images available for this request.</p>
+      </ng-template>
+      
       <p *ngIf="service?.serviceRequestStatus !== null"><strong>Service Status:</strong>
         {{ dictionaries.ServiceRequestStatus[service.serviceRequestStatus]?.en || 'Status Not Available' }}
       </p>

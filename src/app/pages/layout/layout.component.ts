@@ -41,6 +41,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('tokenExpiration');
     this.router.navigate(['/login']);
   }
 }

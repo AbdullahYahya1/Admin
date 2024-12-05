@@ -7,11 +7,12 @@ import { ProductsComponent } from './pages/products/products.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ServicesPageComponent } from './pages/services-page/services-page.component';
 import { ServicePageComponent } from './pages/service-page/service-page.component';
+import { UsersComponent } from './pages/users/users.component';
 
 export const routes: Routes = [
   {    
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'stats',
     pathMatch: 'full'
   },
   {    
@@ -35,6 +36,11 @@ export const routes: Routes = [
       {
         path: 'orders',
         component: OrdersComponent,
+        canActivate: [authGuard] 
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
         canActivate: [authGuard] 
       },
       {

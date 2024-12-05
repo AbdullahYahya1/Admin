@@ -24,10 +24,9 @@ export class OrdersComponent implements OnInit {
   dictionaries: any = dictionaries;
   DictionariesEnum: any = DictionariesEnum;
 
-
-
   constructor(private masterService: MasterService) {}
   cd = inject(ChangeDetectorRef);
+
   handleDriverAssigned(orderId: number): void {
     const order = this.orders.find(o => o.orderId === orderId);
     if (order) {
@@ -35,6 +34,7 @@ export class OrdersComponent implements OnInit {
       this.cd.detectChanges();
     }
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const target = event.target as HTMLElement;
@@ -42,6 +42,7 @@ export class OrdersComponent implements OnInit {
       this.closeDropdown();
     }
   }
+
   displayOrderDetails(order: Order): void {
     this.selectedOrder = order;
     this.isOrderDetailsVisible = true;
@@ -65,10 +66,10 @@ export class OrdersComponent implements OnInit {
 
   getStatusClass(status: number): string {
     switch (status) {
-      case 0: return 'case-info';       // Processing
-      case 1: return 'case-success';    // Complete
-      case 2: return 'case-danger';     // Cancelled
-      case 3: return 'case-warning';    // Returned
+      case 0: return 'case-info';      
+      case 1: return 'case-success';   
+      case 2: return 'case-danger';     
+      case 3: return 'case-warning';    
       default: return '';
     }
   }
@@ -81,12 +82,34 @@ export class OrdersComponent implements OnInit {
     this.activeDropdown = null;
   }
 
+  sortOrders(): void {
+    this.orders.sort((a, b) => {
+      // Priority 1: NotShipped and has a transaction
+      const aPriority1 = a.shippingStatus === 0 && a.transaction !== null;
+      const bPriority1 = b.shippingStatus === 0 && b.transaction !== null;
+      if (aPriority1 && !bPriority1) return -1;
+      if (!aPriority1 && bPriority1) return 1;
+
+      // Priority 2: Based on shipping status importance
+      const shippingPriority = [0, 1, 2, 3, 4];
+      const aShippingIndex = shippingPriority.indexOf(a.shippingStatus);
+      const bShippingIndex = shippingPriority.indexOf(b.shippingStatus);
+      if (aShippingIndex !== bShippingIndex) return aShippingIndex - bShippingIndex;
+
+      // Priority 3: Complete orders last
+      if (a.status === 1 && b.status !== 1) return 1;
+      if (a.status !== 1 && b.status === 1) return -1;
+
+      return 0; // Equal priority
+    });
+  }
+
   ngOnInit(): void {
     this.masterService.getOrders().subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
           this.orders = response.result;
-          console.log('Orders:', this.orders);  
+          this.sortOrders(); 
         } else {
           this.errorMessage = response.message || 'Failed to fetch orders.';
         }
@@ -97,4 +120,3 @@ export class OrdersComponent implements OnInit {
     });
   }
 }
- 

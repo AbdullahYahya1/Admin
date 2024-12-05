@@ -28,6 +28,7 @@ export class ServicesPageComponent implements OnInit {
       next: (response: ApiResponse<GetServiceDto[]>) => {
         if (response.isSuccess) {
           this.serviceRequests = response.result;
+          console.log('Service Requests:', this.serviceRequests);
         } else {
           console.error('Error:', response.message);
         }

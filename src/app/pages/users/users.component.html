@@ -1,0 +1,76 @@
+<h1>Users</h1>
+<div class="container">
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <!-- Drivers Table -->
+  <div class="table-container">
+    <h2>Drivers</h2>
+    <table *ngIf="drivers.length > 0" class="custom-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td title="{{ driver.userId }}">
+            {{ driver.userId | slice: 0:7 }}{{ driver.userId.length > 15 ? '....' : '' }}{{driver.userId | slice: driver.userId.length-7: driver.userId.length}}
+          </td>
+          <td>{{ driver.email }}</td>
+          <td>{{ driver.userName }}</td>
+          <td>{{ driver.mobileNumber }}</td>
+          <td class="buttonTd">
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                [checked]="driver.isActive"
+                (change)="toggleActiveStatus(driver)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="drivers.length === 0 && !errorMessage" class="info-message">
+      No drivers found.
+    </div>
+  </div>
+
+  <!-- Normal Users Table -->
+  <div class="table-container">
+    <h2>Clients</h2>
+    <table *ngIf="normalUsers.length > 0" class="custom-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of normalUsers">
+          <td title="{{ user.userId }}">
+            {{ user.userId | slice: 0:7 }}{{ user.userId.length > 15 ? '....' : '' }}{{user.userId | slice: user.userId.length-7: user.userId.length}}
+          </td>
+          <td>{{ user.mobileNumber }}</td>
+          <td class="buttonTd">
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                [checked]="user.isActive"
+                (change)="toggleActiveStatus(user)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="normalUsers.length === 0 && !errorMessage" class="info-message">
+      No normal users found.
+    </div>
+  </div>
+</div>

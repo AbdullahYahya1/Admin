@@ -1,9 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterService } from '../../services/master.service';
-import { dictionaries, DictionariesEnum, PostupdateDto } from '../../interfaces/interfaces';
+import { dictionaries, DictionariesEnum, PostupdateDto, RequestType } from '../../interfaces/interfaces';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-service-page',
@@ -18,6 +19,8 @@ export class ServicePageComponent {
   responseDetails: string = '';
   serviceStatus: number | null = null;
   dictionaries: any = dictionaries;
+  public Url: string = environment.Url;
+  Vdictionaries: any = dictionaries;
 
   serviceStatusList = Object.entries(dictionaries.ServiceRequestStatus).map(([key, value]) => ({
     id: Number(key),
@@ -25,7 +28,7 @@ export class ServicePageComponent {
   }));
   masterService = inject(MasterService);
   router = inject(Router);
-  
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -51,7 +54,9 @@ export class ServicePageComponent {
       }
     });
   }
-
+  getRequestTypeLabel(type: RequestType): string {
+    return this.Vdictionaries.RequestType[type]?.en || 'Unknown';
+  }
   submitResponse() {
     const requestData:PostupdateDto = {
       responseDetails: this.responseDetails,

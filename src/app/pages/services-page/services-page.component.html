@@ -47,7 +47,7 @@
     <p *ngIf="request.requestedPrice !== null"><strong>Requested Price:</strong> {{ request.requestedPrice | currency }}</p>
     <p *ngIf="request.purchasePrice !== null"><strong>Purchase Price:</strong> {{ request.purchasePrice | currency }}</p>
     <p *ngIf="request.submissionDate"><strong>Submission Date:</strong> {{ request.submissionDate | date: 'short' }}</p>
-    <p *ngIf="request.userPhone"><strong>User Phone:</strong> {{ request.userPhone }}</p>
+    <p *ngIf="request.userPhone"><strong>User Phone:</strong> {{ request.userPhone  }}</p>
     <p *ngIf="request.requestType !== null"><strong>Request Type:</strong> {{ getRequestTypeLabel(request.requestType) }}</p>
   </div>
 </div>

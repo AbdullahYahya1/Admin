@@ -52,7 +52,7 @@
     color: var(--orange);
 }
 .service-card {
-    background-color: var(--overlay-deep);
+    background-color: rgb(42, 42, 42);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 20px;

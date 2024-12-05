@@ -1,0 +1,110 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .table-container {
+    width: 80%;
+    margin-bottom: 30px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: none;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    border: none;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .custom-table th {
+    background-color: #5f5f62;
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  .custom-table th.no-bg {
+    background-color: transparent;
+    color: white;
+  }
+  
+  .custom-table tr:nth-child(even) {
+    background-color: #2a2a2a;
+  }
+  
+  .custom-table tr:nth-child(odd) {
+    background-color: #3a3a3a;
+  }
+  
+  .custom-table tr:hover {
+    background-color: #444;
+  }
+  
+  .custom-table td {
+    border: none;
+    font-size: 14px;
+    color: rgb(221, 221, 221);
+  }
+  
+  .custom-table th:last-child,
+  .custom-table td:last-child {
+    text-align: center; 
+    width: 120px; /
+  }
+  
+  .buttonTd {
+    background-color: rgb(33, 33, 33);
+    border: none;
+    text-align: right; /* Align the toggle switch to the right */
+  }
+  
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .toggle-switch input {
+    display: none;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #dc3545;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  .toggle-switch input:checked + .toggle-slider {
+    background-color: #28a745;
+  }
+  
+  .toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+  }
+  

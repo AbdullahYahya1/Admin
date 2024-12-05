@@ -18,7 +18,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: none;
     padding: 12px;
     text-align: left;
 }
@@ -30,9 +30,11 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: var(--overlay-deep);
+    background-color: #2a2a2a;
 }
-
+tr:nth-child(odd) {
+    background-color: #3a3a3a;
+}
 /* Hidden class to hide rows */
 .hidden {
     display: none;

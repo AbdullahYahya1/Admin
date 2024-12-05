@@ -1,4 +1,4 @@
-import { GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO, Stats } from './../interfaces/interfaces';
+import { Driver, GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, NormalUser, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO, Stats } from './../interfaces/interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -95,5 +95,22 @@ export class MasterService {
   GetStats(): Observable<ApiResponse<Stats>> {
     const url = `${this.apiUrl}Stats`;
     return this.http.get<ApiResponse<Stats>>(url);
+  }
+
+  toggleUserStatus(userId: string): Observable<ApiResponse<boolean>> {
+    const url = `${this.apiUrl}User/ToggleUserStatus/${userId}`;
+    return this.http.post<ApiResponse<boolean>>(url, {});
+  }
+
+  // 2. Get normal users
+  getNormalUsers(): Observable<ApiResponse<NormalUser[]>> {
+    const url = `${this.apiUrl}User/GetUsers?type=0`;
+    return this.http.get<ApiResponse<NormalUser[]>>(url);
+  }
+
+  // 3. Get drivers
+  getDrivers(): Observable<ApiResponse<Driver[]>> {
+    const url = `${this.apiUrl}User/GetUsers?type=3`;
+    return this.http.get<ApiResponse<Driver[]>>(url);
   }
 }

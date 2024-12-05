@@ -45,3 +45,31 @@ button:disabled {
   border: none;
   cursor: pointer;
 }
+
+.image-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.image-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 150px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.image-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-card p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
