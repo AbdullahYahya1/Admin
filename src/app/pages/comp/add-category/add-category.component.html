@@ -1,32 +1,61 @@
 <div class="modal-overlay" (click)="close()"></div>
 <div class="add-category-container">
-    <div class="add-category-form">
-        <button class="close-button" (click)="close()">×</button>
-        <h3>Add New Category</h3>
-        <form (ngSubmit)="submitCatagory()">
-            <div>
-                <label for="nameAr">Category Ar Name:</label>
-                <input type="text" id="nameAr" [(ngModel)]="CatagoryData.nameAr" name="nameAr" placeholder="ادخل الاسم" required>
-            </div>
+  <div class="add-category-form">
+    <button class="close-button" (click)="close()">×</button>
+    <h3>Add New Category</h3>
+    <form (ngSubmit)="submitCategory()" #categoryForm="ngForm" novalidate>
+      <div>
+        <label for="nameAr">Category Ar Name:</label>
+        <input
+          type="text"
+          id="nameAr"
+          [(ngModel)]="CatagoryData.nameAr"
+          name="nameAr"
+          placeholder="ادخل الاسم"
+          required
+        />
+      </div>
 
-            <div>
-                <label for="nameEn">Category En Name:</label>
-                <input type="text" id="nameEn" [(ngModel)]="CatagoryData.nameEn" name="nameEn" placeholder="Enter name" required>
-            </div>
+      <div>
+        <label for="nameEn">Category En Name:</label>
+        <input
+          type="text"
+          id="nameEn"
+          [(ngModel)]="CatagoryData.nameEn"
+          name="nameEn"
+          placeholder="Enter name"
+          required
+        />
+      </div>
 
-            <!-- File Upload for Category Image -->
-            <div>
-                <label for="imageUpload">Upload Image:</label>
-                <input type="file" id="imageUpload" (change)="onFileChange($event)" accept="image/*">
-            </div>
-            <div *ngIf="imagePreview">
-                <h4>Image Preview:</h4>
-                <img [src]="imagePreview" alt="Image Preview" style="width: 100px; height: 100px;">
-            </div>
+      <!-- File Upload for Category Image -->
+      <div>
+        <label for="imageUpload">Upload Image:</label>
+        <input
+          type="file"
+          id="imageUpload"
+          (change)="onFileChange($event)"
+          accept="image/*"
+        />
+      </div>
+      <div *ngIf="imagePreview">
+        <h4>Image Preview:</h4>
+        <img [src]="imagePreview" alt="Image Preview" style="width: 100px; height: 100px;" />
+      </div>
 
-            <button type="submit">Submit</button>
-            <button type="button" (click)="close()">Close</button>
-        </form>
-        <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
-    </div>
+      <!-- Submit and Close Buttons -->
+      <div class="buttonContainer">
+        <button
+          type="submit"
+          class="custom-button"
+          [disabled]="isSaving || !categoryForm.valid"
+          [class.disabled]="isSaving || !categoryForm.valid"
+          [class.valid]="categoryForm.valid && !isSaving"
+        >
+          {{ isSaving ? 'Saving...' : 'Submit' }}
+        </button>
+        <button class="close-button-2" type="button" (click)="close()">Close</button>
+      </div>
+    </form>
+  </div>
 </div>

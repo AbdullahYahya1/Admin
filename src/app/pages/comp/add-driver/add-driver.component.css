@@ -1,4 +1,4 @@
-/* Full-page overlay */
+/* Full-page overlay for modal focus */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -12,22 +12,22 @@
 }
 
 /* Centered container for the form */
-.add-brand-container {
+.add-driver-container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 19999;
     width: 100%;
-    max-width: 500px; /* Focused view for smaller forms */
+    max-width: 500px; /* Slightly smaller than larger forms */
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
 
 /* Form content styling */
-.add-brand-form {
-    background-color: var(--overlay-deep); /* Matches modal styling */
+.add-driver-form {
+    background-color: var(--overlay-deep); /* Matches modal design */
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
@@ -36,7 +36,7 @@
     position: relative;
     max-height: 80vh;
     overflow-y: auto;
-    animation: fadeInScale 0.4s ease-in-out; /* Smooth fade-in and scale animation */
+    animation: fadeInScale 0.4s ease-in-out; /* Fade-in and scale animation */
 }
 
 /* Modal animation */
@@ -51,36 +51,7 @@
     }
 }
 
-/* Input fields and dropdowns */
-input[type="text"], select {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Subtle glow effect on focus */
-    outline: none;
-}
-
-/* Buttons */
-button {
-    margin-right: 10px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 16px;
-}
-
+/* Close button styling */
 .close-button {
     position: absolute;
     top: 12px;
@@ -97,36 +68,85 @@ button {
     color: #ff0000;
 }
 
+/* Input fields */
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Buttons */
+button {
+    margin-right: 10px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+.numberBox{
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    
+}
+/* Custom submit button */
+
+button.custom-button:disabled {
+    background-color: #d3d3d3;
+}
+
+button.custom-button {
+    background-color: rgb(9, 192, 9);
+}
+
+/* Secondary close button */
+button[type="button"] {
+    background-color: #6c757d;
+}
+
+button[type="button"]:hover {
+    background-color: #5a6268;
+}
 
 /* Labels */
 label {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 6px;
+    color: white;
     display: block;
-    color: white; /* Consistent with modal design */
 }
 
 /* Headings */
 h3 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: white; /* Matches modal styling */
+    color: white;
 }
 
-/* Country of Origin - "Other" input field */
-#otherCountry {
-    margin-top: 10px;
-}
-
-/* Responsive design */
+/* Responsive styles */
 @media (max-width: 600px) {
-    .add-brand-container {
+    .add-driver-container {
         max-width: 100%;
         padding: 15px;
     }
 
-    .add-brand-form {
+    .add-driver-form {
         padding: 20px;
     }
 }

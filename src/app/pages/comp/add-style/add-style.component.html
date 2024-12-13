@@ -1,21 +1,49 @@
 <div class="modal-overlay" (click)="close()"></div> <!-- Background overlay -->
 <div class="add-style-container">
-    <div class="add-style-form">
-        <button class="close-button" (click)="close()">×</button>
-        <h3>Add New Style</h3>
-        <form (ngSubmit)="submitStyle()">
-          <div>
-            <label for="styleNameAr"> style Ar Name:</label>
-            <input type="text" id="styleNameAr" [(ngModel)]="styleData.styleNameAr" name="styleNameAr" placeholder="ادخل الاسم" required>
-          </div>
+  <div class="add-style-form">
+    <button class="close-button" (click)="close()">×</button>
+    <h3>Add New Style</h3>
 
-          <div>
-            <label for="styleNameEn">style EN Name:</label>
-            <input type="text" id="styleNameEn" [(ngModel)]="styleData.styleNameEn" name="styleNameEn" placeholder="Enter name" required>
-          </div>
-          <button type="submit">Submit</button>
-          <button type="button" (click)="close()">Close</button>
-        </form>
-        <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
-    </div>
+    <form (ngSubmit)="submitStyle()" #styleForm="ngForm" novalidate>
+      <!-- Arabic Style Name -->
+      <div>
+        <label for="styleNameAr">Style Arabic Name:</label>
+        <input
+          type="text"
+          id="styleNameAr"
+          [(ngModel)]="styleData.styleNameAr"
+          name="styleNameAr"
+          placeholder="ادخل الاسم"
+          required
+        />
+      </div>
+
+      <!-- English Style Name -->
+      <div>
+        <label for="styleNameEn">Style English Name:</label>
+        <input
+          type="text"
+          id="styleNameEn"
+          [(ngModel)]="styleData.styleNameEn"
+          name="styleNameEn"
+          placeholder="Enter name"
+          required
+        />
+      </div>
+
+      <!-- Submit and Close Buttons -->
+      <div class="buttonContainer">
+        <button
+          type="submit"
+          class="custom-button"
+          [disabled]="isSaving || !styleForm.valid"
+          [class.disabled]="isSaving || !styleForm.valid"
+          [class.valid]="styleForm.valid && !isSaving"
+        >
+          {{ isSaving ? 'Saving...' : 'Submit' }}
+        </button>
+        <button class="close-button-2" type="button" (click)="close()">Close</button>
+      </div>
+    </form>
+  </div>
 </div>

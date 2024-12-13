@@ -1,0 +1,76 @@
+<div class="modal-overlay" (click)="close()"></div>
+<div class="add-driver-container">
+  <div class="add-driver-form">
+    <button class="close-button" (click)="close()">×</button>
+    <h3>Add New Driver</h3>
+
+    <form (ngSubmit)="submitDriver()" #driverForm="ngForm" novalidate>
+      <!-- Driver Email -->
+      <div>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="driverData.email"
+          name="email"
+          required
+        />
+      </div>
+
+      <!-- Driver Username -->
+      <div>
+        <label for="userName">Username:</label>
+        <input
+          type="text"
+          id="userName"
+          [(ngModel)]="driverData.userName"
+          name="userName"
+          required
+        />
+      </div>
+
+      <!-- Driver Password -->
+      <div>
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="driverData.password"
+          name="password"
+          required
+        />
+      </div>
+
+      <!-- Driver Mobile Number -->
+      <div>
+        <label for="mobileNumber">Mobile Number:</label>
+        <div class="flex">
+            <div style="display: flex; align-items: center;">
+              <span class="numberBox" style="padding-right: 5px;">+966</span>
+              <input
+                type="text"
+                id="mobileNumber"
+                [(ngModel)]="driverData.mobileNumber"
+                name="mobileNumber"
+                required
+              />
+            </div>
+          </div>
+    </div>
+
+      <!-- Submit and Close Buttons -->
+     <div class="buttonContainer">
+      <button
+        type="submit"
+        class="custom-button"
+        [disabled]="isSaving || !driverForm.valid"
+      >
+        {{ isSaving ? 'Saving...' : 'Submit' }}
+      </button>
+      <button type="button" class="close-button-2" (click)="close()">Close</button>
+    </div>
+    </form>
+
+
+  </div>
+</div>

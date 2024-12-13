@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiResponse, dictionaries, GetServiceDto, RequestType, ServiceRequestStatus } from '../../interfaces/interfaces';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { SignalrService } from '../../services/signalr.service';
 
 @Component({
   selector: 'app-services-page',
   standalone: true,
-  imports: [FormsModule, CommonModule,RouterOutlet, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './services-page.component.html',
   styleUrls: ['./services-page.component.css']
 })
@@ -18,17 +19,22 @@ export class ServicesPageComponent implements OnInit {
   Vdictionaries: any = dictionaries;
   filterStatus: string = '';
   filterRequestType: string = '';
-  
+  signalRService = inject(SignalrService); 
   constructor(private router: Router) {}
   ngOnInit(): void {
     this.loadServiceRequests();
+    this.signalRService.message$.subscribe((message) => {
+      if (message === 'Service') {
+        console.log('Service message received');
+        this.loadServiceRequests();
+      }
+    });
   }
   loadServiceRequests(): void {
     this.masterService.getCurrentUserServices().subscribe({
       next: (response: ApiResponse<GetServiceDto[]>) => {
         if (response.isSuccess) {
-          this.serviceRequests = response.result;
-          console.log('Service Requests:', this.serviceRequests);
+          this.serviceRequests = response.result.reverse();
         } else {
           console.error('Error:', response.message);
         }

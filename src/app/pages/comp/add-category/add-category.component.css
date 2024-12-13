@@ -1,14 +1,14 @@
-/* Styles for the full-page overlay */
+/* Full-page overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); /* Slightly less opacity for better visibility */
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.747); /* Dark overlay for modal focus */
+    z-index: 1999;
     opacity: 1;
-    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    transition: opacity 0.3s ease-in-out;
 }
 
 /* Centered container for the form */
@@ -17,29 +17,29 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 19999;
     width: 100%;
-    max-width: 500px; /* Slightly smaller for a more focused view */
+    max-width: 500px; /* Slightly smaller than larger forms */
     padding: 20px;
     box-sizing: border-box;
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transitions */
+    transition: all 0.3s ease;
 }
 
-/* Styles for the form content */
+/* Form content styling */
 .add-category-form {
-    background-color: #fff;
+    background-color: var(--overlay-deep); /* Matches modal design */
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15); /* Softer shadow */
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
     width: 100%;
     box-sizing: border-box;
     position: relative;
     max-height: 80vh;
     overflow-y: auto;
-    animation: fadeInScale 0.4s ease-in-out; /* Adding fade-in and scale animation */
+    animation: fadeInScale 0.4s ease-in-out; /* Fade-in and scale animation */
 }
 
-/* Animation for fade-in and scale */
+/* Modal animation */
 @keyframes fadeInScale {
     0% {
         opacity: 0;
@@ -51,25 +51,25 @@
     }
 }
 
-/* Close button positioned at the top right of the form */
+/* Close button styling */
 .close-button {
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: transparent;
+    background-color: rgb(42, 42, 42);
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: white;
     transition: color 0.3s ease;
 }
 
 .close-button:hover {
-    color: #000; /* Darker color on hover */
+    color: #ff0000;
 }
 
 /* Input fields */
-input[type="text"] {
+input[type="text"], input[type="file"] {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -80,18 +80,17 @@ input[type="text"] {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="file"]:focus {
     border-color: #007bff;
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2); /* Subtle glow effect */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
 
-/* Form buttons */
+/* Buttons */
 button {
     margin-right: 10px;
     padding: 10px 16px;
     border-radius: 6px;
-    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
@@ -99,34 +98,41 @@ button {
     font-size: 16px;
 }
 
-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
 
-button:active {
-    transform: scale(0.98); /* Slight shrink effect on click */
-}
 
-button[type="button"] {
-    background-color: #6c757d; /* Gray background for close button */
-}
-
-button[type="button"]:hover {
-    background-color: #5a6268; /* Darker gray on hover */
+/* Labels */
+label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: white;
+    display: block;
 }
 
 /* Headings */
 h3 {
-    color: #333;
     font-size: 24px;
     margin-bottom: 20px;
+    color: white;
 }
 
-/* Label */
-label {
-    font-size: 16px;
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 6px;
-    display: block;
+/* Image preview */
+img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 6px;
+    margin: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .add-category-container {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .add-category-form {
+        padding: 20px;
+    }
 }

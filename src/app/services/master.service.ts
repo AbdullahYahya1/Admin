@@ -1,5 +1,5 @@
-import { Driver, GetServiceDto, GetShippingStatusDto, NewUsersOverTimeDTO, NormalUser, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO, Stats } from './../interfaces/interfaces';
-import { Injectable } from '@angular/core';
+import { Driver, GetServiceDto, GetShippingStatusDto, GetUserDto, NewUsersOverTimeDTO, NormalUser, OrderByStatusDto, PostCategoryDto, postDeactivateProduct, PostDriver, PostMaterialDto, PostupdateDto, SalesByCategoryDto, SalesOverTimeDTO, Stats } from './../interfaces/interfaces';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,7 @@ import { style } from '@angular/animations';
   providedIn: 'root'
 })
 export class MasterService {
+
   private apiUrl: string = environment.apiUrl; // Use the centralized API URL
   constructor(private http: HttpClient) {}
   getOrders(): Observable<ApiResponse<Order[]>> {
@@ -67,9 +68,9 @@ export class MasterService {
     const url = `${this.apiUrl}ServiceRequest/ResponseToRequest/${id}`;
     return this.http.put<ApiResponse<boolean>>(url, postUpdate);
   }
-  UpdateProduct(ProductId:number, updateProductDto:PostProductDto): Observable<ApiResponse<boolean>> {
+  UpdateProduct(ProductId:number, updateProductDto:PostProductDto): Observable<ApiResponse<Product>> {
     const url = `${this.apiUrl}Product/UpdateProduct/${ProductId}`;
-    return this.http.put<ApiResponse<boolean>>(url, updateProductDto);
+    return this.http.put<ApiResponse<Product>>(url, updateProductDto);
   }
   getSalesOverTime(): Observable<ApiResponse<SalesOverTimeDTO[]>> {
     const url = `${this.apiUrl}Stats/SalesOverTime`;
@@ -112,5 +113,11 @@ export class MasterService {
   getDrivers(): Observable<ApiResponse<Driver[]>> {
     const url = `${this.apiUrl}User/GetUsers?type=3`;
     return this.http.get<ApiResponse<Driver[]>>(url);
+  }
+
+  ///api/User/AddDriver
+  AddDriver(driver:PostDriver): Observable<ApiResponse<GetUserDto>> {
+    const url = `${this.apiUrl}User/AddDriver`;
+    return this.http.post<ApiResponse<GetUserDto>>(url, driver);
   }
 }

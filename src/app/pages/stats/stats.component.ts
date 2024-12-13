@@ -12,20 +12,32 @@ import { GetShippingStatusComponent } from '../comp/get-shipping-status/get-ship
 @Component({
   selector: 'app-stats',
   standalone: true,
-  imports: [JsonPipe, CommonModule, OrdersByStatusComponent, GetSalesOverTimeComponent, GetSalesByCategoryComponent, AssgintoDriverComponent,NewUsersOverTimeComponent , GetShippingStatusComponent ],
+  imports: [ CommonModule, OrdersByStatusComponent, GetSalesOverTimeComponent, GetSalesByCategoryComponent,NewUsersOverTimeComponent , GetShippingStatusComponent ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.css'
 })
 export class StatsComponent implements AfterViewInit , OnInit {
   constructor(private masterService: MasterService) {}
-  stats: any;
+  stats = {
+    newOrdersCountToday: 0,
+    newUsersCountToday: 0,
+    totalOrders: 0,
+    totalSales: 0,
+    pendingServiceRequests: 0,
+    completedOrdersToday: 0,
+    productsInStock: 0,
+    totalClients : 0,
+    cancelledOrders: 0,
+    totalRevenueThisMonth: 0
+  };
+  
   ngOnInit(): void {
-    var stats = this.masterService.GetStats().subscribe(
+    this.masterService.GetStats().subscribe(
       {
         next: (response: ApiResponse<Stats>) => {
           if (response) {
             this.stats = response.result;
-            console.log('Stats:', response);
+             this.stats.newOrdersCountToday = this.stats.newOrdersCountToday || 0;
           } else {
             console.error('Error:', response);
           }

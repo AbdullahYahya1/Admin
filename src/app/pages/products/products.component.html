@@ -1,10 +1,11 @@
 <h1>Products</h1>
-<div class="container" (scroll)="onScroll()">
+<div class="container" (scroll)="onScroll()" >
     <div class="bar">
 
     
         <div class="search-bar">
-            <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" (input)="onInputChange(searchTerm)"
+            <input type="text" placeholder="Search..." [(ngModel)]="searchTerm"  (input)="onInputChange(searchTerm)"
+            
                 (keyup.enter)="onSearch(searchTerm)" />
         </div>
 
@@ -31,9 +32,9 @@
                     <p><strong>Brand:</strong> {{ product.brand.brandName }}</p>
                 </div>
                 <div class="product-price-actions">
-                    <div class="product-price">${{ product.price }}</div>
+                    <div class="product-price">{{ product.price }} SAR</div>
                     <div class="actions">
-                        <span class="edit" (click)="onSelect(product)">✏️</span>
+                        <span class="edit"   (click)="onSelect(product)" >✏️</span>
                         <span class="delete" (click)="conformDelete(product)">❌</span>
                     </div>
                 </div>
@@ -157,18 +158,30 @@
               <input type="file" id="images" (change)="onImageSelected($event)" multiple accept="image/*">
             </div>
         </div>
-
-        <button type="submit" class="custom-button">Save</button>
-        <button type="button" class="custom-button" (click)="close()">Cancel</button>
+        <div class="buttonContainer">
+        <button 
+        type="submit" 
+        class="custom-button" 
+        [ngClass]="{'disabled-button': isSaving}" 
+        [disabled]="isSaving"
+        >
+        {{ isSaving ? 'Saving...' : 'Save' }}
+      </button>
+      
+        <button type="button" class="close-button-2" (click)="close()">Cancel</button>
+      </div>
       </form>
     </div>
   </div>
 }
 
+<div class="loading" *ngIf="loading">
 
+  <img src="assets/loading-loading-forever.gif" alt="Loading" />
+  
+</div>
 
-<div *ngIf="loading">Loading more products...</div>
-<app-add-product *ngIf="showAddProduct" (closeForm)="toggleAddProduct()"></app-add-product>
+<app-add-product (productCreated)="onProductCreated($event)"  *ngIf="showAddProduct" (closeForm)="toggleAddProduct()"></app-add-product>
 <app-add-category *ngIf="showAddCategory" (closeForm)="toggleAddCategory()"></app-add-category>
 <app-add-material *ngIf="showAddMaterial" (closeForm)="toggleAddMaterial()"></app-add-material>
 <app-add-brand *ngIf="showAddBrand" (closeForm)="toggleAddBrand()"></app-add-brand>

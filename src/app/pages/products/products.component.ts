@@ -1,6 +1,6 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, inject, ElementRef } from '@angular/core';
 import { MasterService } from '../../services/master.service';
-import { ColorTranslations, LookUpDataModel, PostProductDto, Product, ProductStatus, ProductStatusTranslations } from '../../interfaces/interfaces';
+import { ColorTranslations, GetUserDto, LookUpDataModel, PostProductDto, Product, ProductStatus, ProductStatusTranslations } from '../../interfaces/interfaces';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { AddProductComponent } from "../comp/add-product/add-product.component";
 import { AddCategoryComponent } from "../comp/add-category/add-category.component";
@@ -10,6 +10,8 @@ import { AddStyleComponent } from "../comp/add-style/add-style.component";
 import { debounceTime, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { LanguageValidationService } from '../../services/language-validation.service';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +22,6 @@ import { environment } from '../../../environments/environment';
     AddMaterialComponent, 
     AddBrandComponent, 
     AddStyleComponent,
-    JsonPipe, 
     CommonModule,
     FormsModule
   ],
@@ -73,7 +74,9 @@ export class ProductsComponent implements OnInit {
   categories: LookUpDataModel<number>[] = [];
   materials: LookUpDataModel<number>[] = [];
   styles: LookUpDataModel<number>[] = [];
-
+  isSaving: boolean = false;
+  private toastrService = inject(ToastrService);
+  private languageValidatorService = inject(LanguageValidationService);
   public Url: string = environment.Url;
   products: Product[] = [];
   errorMessage: string = '';
@@ -195,17 +198,24 @@ dropdownOpen: any;
   }
 
   changeStatus(productId: number): void {
-      this.masterService.DeactivateProduct(productId).subscribe({
-        next: (res) => {
-          if (res.isSuccess) {
-            this.products = this.products.filter((product) => product.productId !== productId);
-          }
-        },
-        error: (error) => {
-          console.log('Error:', error);
+    this.masterService.DeactivateProduct(productId).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.products = this.products.filter((product) => product.productId !== productId);
+          this.toastrService.success('Product deactivated successfully!', 'Deactivate Product'); 
+          this.showConfirmDialog = false;
+        } else {
+          this.toastrService.error('Failed to deactivate product.', 'Deactivate Product'); 
         }
-      });
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        this.toastrService.error('An error occurred while deactivating the product.', 'Deactivate Product');
+      },
+    });
   }
+  
+
   conformDelete(product: Product): void {
     this.Selectedproduct = product;
     this.showConfirmDialog = true;
@@ -261,6 +271,27 @@ dropdownOpen: any;
       }
     }
   }
+
+  onProductCreated(product: Product): void {
+    this.toastrService.success(product.nameEn+' Product added successfully!', 'Add Product'); 
+    this.showAddProduct = false;
+    this.pageNumber = 1;
+    this.pageSize= 10;
+    this.products = [];
+    this.loadProducts();
+  }
+
+
+  eRef = inject(ElementRef);
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: MouseEvent) {
+    if (this.dropdownOpen && ((event.target as HTMLElement).className !="dropdown-toggle")) {
+      this.dropdownOpen = false;
+    }
+    if (this.showConfirmDialog && ((event.target as HTMLElement).className =="modal-overlay")) {
+      this.showConfirmDialog = false;
+    }
+  }
   uploadNewImagesAndSave(updatedProductDto: PostProductDto): void {
     const uploadedImages: string[] = [];
     this.newImages.forEach((file) => {
@@ -276,21 +307,140 @@ dropdownOpen: any;
       reader.readAsDataURL(file);
     });
   }
+
   updateProduct(updatedProductDto: PostProductDto): void {
-    this.masterService.UpdateProduct(this.Selectedproduct.productId, updatedProductDto).subscribe(
-      (response) => {
+    if (updatedProductDto.Weight && updatedProductDto.Weight < 1) {
+      this.toastrService.error('Weight must be more than 1.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (updatedProductDto.Height && updatedProductDto.Height < 1) {
+      this.toastrService.error('Height must be more than 1.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (updatedProductDto.Width && updatedProductDto.Width < 1) {
+      this.toastrService.error('Width must be more than 1.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (updatedProductDto.Price <= 0) {
+      this.toastrService.error('Price must be greater than 0.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (updatedProductDto.Price > 1000000) {
+      this.toastrService.error('Price must be less than 1000000.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!updatedProductDto.NameAr.trim()) {
+      this.toastrService.error('Arabic Name is required.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!this.languageValidatorService.validateArabic(updatedProductDto.NameAr)) {
+      this.toastrService.error('Arabic Name must be in Arabic.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!updatedProductDto.NameEn.trim()) {
+      this.toastrService.error('English Name is required.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!this.languageValidatorService.validateEnglish(updatedProductDto.NameEn)) {
+      this.toastrService.error('English Name must be in English.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!updatedProductDto.DescriptionAr.trim()) {
+      this.toastrService.error('Arabic Description is required.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!this.languageValidatorService.validateArabic(updatedProductDto.DescriptionAr)) {
+      this.toastrService.error('Arabic Description must be in Arabic.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!updatedProductDto.DescriptionEn.trim()) {
+      this.toastrService.error('English Description is required.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    if (!this.languageValidatorService.validateEnglish(updatedProductDto.DescriptionEn)) {
+      this.toastrService.error('English Description must be in English.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+  
+    this.isSaving = true; 
+    this.masterService.UpdateProduct(this.Selectedproduct.productId, updatedProductDto).subscribe({
+      next: (response) => {
         if (response.isSuccess) {
-          console.log('Product updated successfully!');
+          this.showAddProduct = false;
+          this.pageNumber = 1;
+          this.pageSize= 10;
+          this.products = [];
+          this.loadProducts();
+          this.newImages = [];
+          this.isSaving = false; 
+          this.toastrService.success('Product updated successfully!', 'Update Product'); 
           this.close();
         } else {
+          this.isSaving = false; 
           console.error('Failed to update product:', response.message);
+          this.toastrService.error('Failed to update product: ' + response.message, 'Update Product');
         }
       },
-      (error) => {
+      error: (error) => {
+        this.isSaving = false; 
         console.error('Error occurred while updating product:', error);
-      }
-    );
+        this.toastrService.error('An error occurred while updating the product.', 'Update Product'); 
+      },
+    });
   }
+  
+  
   toggleDropdownMenu() {
     this.dropdownOpen = !this.dropdownOpen;
   }

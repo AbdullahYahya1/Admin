@@ -1,5 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'WalletManger';
+  title = 'AdminPanel';
 }

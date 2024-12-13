@@ -5,6 +5,7 @@ import { dictionaries, DictionariesEnum, PostupdateDto, RequestType } from '../.
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-service-page',
@@ -28,7 +29,7 @@ export class ServicePageComponent {
   }));
   masterService = inject(MasterService);
   router = inject(Router);
-
+  toastrService = inject(ToastrService);
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -42,8 +43,7 @@ export class ServicePageComponent {
     this.masterService.getCurrentUserService(Number(this.serviceId)).subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
-          this.service = response.result;
-          console.log('Service:', this.service);
+          this.service = response.result; 
           this.serviceStatus = this.service.serviceRequestStatus;
         } else {
           console.error('Error:', response.message);
@@ -58,26 +58,26 @@ export class ServicePageComponent {
     return this.Vdictionaries.RequestType[type]?.en || 'Unknown';
   }
   submitResponse() {
-    const requestData:PostupdateDto = {
+    const requestData: PostupdateDto = {
       responseDetails: this.responseDetails,
-      serviceRequestStatus: this.serviceStatus ?? 0 
+      serviceRequestStatus: this.serviceStatus ?? 0,
     };
-    
+  
     this.masterService.ResponseToRequest(Number(this.serviceId), requestData).subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
-          console.log('Response submitted successfully!');
-          this.router.navigate(['/services']);
-
+          this.toastrService.success('Response submitted successfully!', 'Submit Response'); // Show success toast
+          this.router.navigate(['/services']); // Navigate after success
         } else {
+          this.toastrService.error('Failed to submit response: ' + response.message, 'Submit Response'); // Show error toast
           console.error('Failed to submit response:', response.message);
         }
-
       },
       error: (err: any) => {
+        this.toastrService.error('An error occurred while submitting the response.', 'Submit Response'); // Show error toast
         console.error('Error submitting response:', err);
-      }
-
-    })
+      },
+    });
   }
+  
 }

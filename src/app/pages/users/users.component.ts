@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { Driver, NormalUser } from '../../interfaces/interfaces';
+import { Driver, GetUserDto, NormalUser } from '../../interfaces/interfaces';
 import { MasterService } from '../../services/master.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AddDriverComponent } from '../comp/add-driver/add-driver.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, AddDriverComponent],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
@@ -14,7 +16,7 @@ export class UsersComponent {
   drivers: Driver[] = [];
   normalUsers: NormalUser[] = [];
   errorMessage: string = '';
-
+  searchTerm:string = '';
   constructor(private masterService: MasterService) {}
 
   ngOnInit(): void {
@@ -25,7 +27,6 @@ export class UsersComponent {
   fetchDrivers(): void {
     this.masterService.getDrivers().subscribe({
       next: (response) => {
-        console.log('Drivers:', response);
         if (response.isSuccess) {
           this.drivers = response.result;
         } else {
@@ -52,7 +53,20 @@ export class UsersComponent {
       }
     });
   }
-
+  onDriverAdded(driver: GetUserDto | null): void {
+    if (driver) {
+      this.drivers.push(driver as Driver);
+      this.showDriverForm = false; 
+    }
+  }
+  onSearch(): void {
+    if(this.searchTerm === '') {
+      return this.fetchNormalUsers();
+    }
+    this.normalUsers = this.normalUsers.filter(user =>
+      user.userId.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
   toggleActiveStatus(user: Driver | NormalUser): void {
     user.isActive = !user.isActive; 
     const status = user.isActive ? 'Active' : 'Inactive';
@@ -71,5 +85,11 @@ export class UsersComponent {
       }
     });
   }
-  
+  showDriverForm=false;
+  addNewDriver(){
+    this.showDriverForm = true; 
+  }
+  closeDriverForm(): void {
+    this.showDriverForm = false;
+  }
 }

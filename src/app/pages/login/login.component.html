@@ -2,7 +2,7 @@
 	<div class="container">
 	  <div class="screen">
 		<div class="screen__content">
-		  <h1 class="login__title">Login Page</h1> <!-- Added heading here -->
+		  <h1 class="login__title">Admin</h1> <!-- Added heading here -->
 		  <form class="login">
 			<div class="login__field">
 			  <i class="login__icon fas fa-user"></i>
@@ -12,6 +12,7 @@
 			  <i class="login__icon fas fa-lock"></i>
 			  <input type="password" name="password" [(ngModel)]="loginOBJ.password" class="login__input" placeholder="Password">
 			</div>
+
 			<button type="button" class="button login__submit" (click)="onLogin()">
 			  <span class="button__text">Log In</span>
 			  <i class="button__icon fas fa-chevron-right"></i>
@@ -22,11 +23,13 @@
 		</p> 
 		</div>
 		<div class="screen__background">
-		  <span class="screen__background__shape screen__background__shape4"></span>
-		  <span class="screen__background__shape screen__background__shape3"></span>    
-		  <span class="screen__background__shape screen__background__shape2"></span>
-		  <span class="screen__background__shape screen__background__shape1"></span>
-		</div>    
+			<span class="screen__background__shape screen__background__shape1"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape4"></span>
+		  </div>
 	  </div>
 	</div>
 </div>
+<img src="../../../assets/icon.jpg"  class="img">
+<!-- now svg -->

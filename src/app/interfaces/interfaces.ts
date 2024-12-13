@@ -26,7 +26,10 @@ export interface Brand {
   countryOfOrigin: string;
   contactInfo: string;
 }
-
+export interface RefreshTokenRequest {
+  accessToken: string;
+  refreshToken: string;
+}
 export interface Product {
   productId: number;
   category: Category;
@@ -103,6 +106,12 @@ export interface Driver {
   isActive: boolean;
   mobileNumber: string;
 }
+export interface PostDriver {
+  email: string;
+  userName: string;
+  password: string;
+  mobileNumber: string;
+}
 export interface Transaction {
   transactionDate: string;
   totalPrice: number;
@@ -122,6 +131,10 @@ export interface Order {
   shippingDate: string | null;
   totalPrice: number;
   orderItems: OrderItem[];
+  customer: {
+    userId: string;
+    mobileNumber: string;
+  };
 }
 
 export interface ApiResponse<T> {
@@ -245,7 +258,7 @@ export interface Stats{
   completedOrdersToday:number;
   productsInStock:number;
   cancelledOrders:number;
-  totalWishlistItems:number;
+  totalClients :number;
   totalRevenueThisMonth:number;
 }
 

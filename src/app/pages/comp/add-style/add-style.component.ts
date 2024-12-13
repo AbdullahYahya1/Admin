@@ -1,44 +1,55 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { PostStyleDto } from '../../../interfaces/interfaces';
 import { MasterService } from '../../../services/master.service';
-import { NotificationComponent } from "../notification/notification.component";
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-style',
   standalone: true,
-  imports: [NotificationComponent,FormsModule],
+  imports: [FormsModule],
   templateUrl: './add-style.component.html',
   styleUrl: './add-style.component.css'
 })
 export class AddStyleComponent {
   @Output() closeForm = new EventEmitter<void>();
-  styleData:PostStyleDto={
+
+  styleData: PostStyleDto = {
     styleNameAr: '',
     styleNameEn: ''
-  }
-  message = '';
-  isSuccess = true;
-  private masterService = inject(MasterService)
+  };
 
-  submitStyle() {
-    this.masterService.postStyle(this.styleData).subscribe(
-      (response) => {
+  isSaving = false;
+  private masterService = inject(MasterService);
+  private toastrService = inject(ToastrService);
+
+  submitStyle(): void {
+    if (!this.styleData.styleNameAr.trim() || !this.styleData.styleNameEn.trim()) {
+      this.toastrService.error('Both Arabic and English style names are required.', 'Validation Error');
+      return;
+    }
+
+    this.isSaving = true;
+
+    this.masterService.postStyle(this.styleData).subscribe({
+      next: (response: any) => {
+        this.isSaving = false;
         if (response.isSuccess) {
-          this.message = 'Style added successfully!';
-          this.isSuccess = true;
+          this.toastrService.success('Style added successfully!', 'Add Style');
+          this.close(); // Close the form after successful submission
         } else {
-          this.message = 'Failed to add Style: ' + response.message;
-          this.isSuccess = false;
+          this.toastrService.error('Failed to add style: ' + response.message, 'Add Style');
         }
       },
-      (error) => {
-        this.message = 'Error occurred while adding Style: ' + error;
-        this.isSuccess = false;
-      }
-    );
+      error: (error: any) => {
+        this.isSaving = false;
+        this.toastrService.error('An error occurred while adding the style.', 'Add Style');
+        console.error('Error occurred while adding style:', error);
+      },
+    });
   }
-  close() {
+
+  close(): void {
     this.closeForm.emit();
   }
 }

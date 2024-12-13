@@ -7,7 +7,11 @@
     <p><strong>Status:</strong> {{ order.status === 0 ? 'Pending' : 'Shipped' }}</p>
     <p><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>
   </div>
-
+  <div class="order-info">
+    <h2 class="section-title">Consummation Number</h2>
+    <p><strong>Phone Number:</strong> +966{{ order.customer.mobileNumber }}</p>
+  </div>
+  
   <div class="shipping-info">
     <h2 class="section-title">Shipping Information</h2>
     <p><strong>Street Address:</strong> {{ order.shippingAddress.streetAddress }}</p>
@@ -24,12 +28,11 @@
         <div class="product-image-container">
           <div class="product-image-container">
             <img
-              [src]="item.product.images && item.product.images[0].imageUrl ? (Url + '/' + item.product.images[0].imageUrl) : 'assets/image.png'"
+              [src]="item.product.images && item.product.images[0].imageUrl ? (Url + '/' + item.product.images[0].imageUrl) : '../../../../assets/image.png'"
               alt="Product Image"
               class="product-image"
             />
           </div>
-          
           <ng-template #noImage>
             <img src="path/to/placeholder-image.jpg" alt="No Image Available" class="product-image" />
           </ng-template>

@@ -1,22 +1,46 @@
 <div class="modal-overlay" (click)="close()"></div> <!-- Background overlay -->
 <div class="add-material-container">
-    <div class="add-material-form">
-        <button class="close-button" (click)="close()">×</button>
-        <h3>Add New Material</h3>
-        <form (ngSubmit)="submitMaterial()">
-            <div>
-                <label for="materialNameAr"> Material Ar Name:</label>
-                <input type="text" id="materialNameAr" [(ngModel)]="MaterialData.materialNameAr" name="materialNameAr" placeholder="ادخل الاسم" required>
-              </div>
+  <div class="add-material-form">
+    <button class="close-button" (click)="close()">×</button>
+    <h3>Add New Material</h3>
+    <form (ngSubmit)="submitMaterial()" #materialForm="ngForm" novalidate>
+      <div>
+        <label for="materialNameAr">Material Ar Name:</label>
+        <input
+          type="text"
+          id="materialNameAr"
+          [(ngModel)]="MaterialData.materialNameAr"
+          name="materialNameAr"
+          placeholder="ادخل الاسم"
+          required
+        />
+      </div>
 
-              <div>
-                <label for="materialNameEn">Material EN Name:</label>
-                <input type="text" id="materialNameEn" [(ngModel)]="MaterialData.materialNameEn" name="materialNameEn" placeholder="Enter name" required>
-              </div>
-        
-          <button type="submit">Submit</button>
-          <button type="button" (click)="close()">Close</button>
-        </form>
-        <app-notification [message]="message" [isSuccess]="isSuccess"></app-notification>
-    </div>
+      <div>
+        <label for="materialNameEn">Material EN Name:</label>
+        <input
+          type="text"
+          id="materialNameEn"
+          [(ngModel)]="MaterialData.materialNameEn"
+          name="materialNameEn"
+          placeholder="Enter name"
+          required
+        />
+      </div>
+
+      <!-- Submit and Close Buttons -->
+      <div class="buttonContainer">
+        <button
+          type="submit"
+          class="custom-button"
+          [disabled]="isSaving || !materialForm.valid"
+          [class.disabled]="isSaving || !materialForm.valid"
+          [class.valid]="materialForm.valid && !isSaving"
+        >
+          {{ isSaving ? 'Saving...' : 'Submit' }}
+        </button>
+        <button class="close-button-2" type="button" (click)="close()">Close</button>
+      </div>
+    </form>
+  </div>
 </div>

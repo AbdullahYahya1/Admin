@@ -73,3 +73,6 @@ button:disabled {
   font-size: 14px;
   color: #555;
 }
+.valid{
+  background-color: rgb(45, 190, 45);
+}

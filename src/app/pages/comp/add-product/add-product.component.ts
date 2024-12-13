@@ -1,18 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MasterService } from '../../../services/master.service';
-import { LookUpDataModel, PostProductDto } from '../../../interfaces/interfaces';
+import { LookUpDataModel, PostProductDto, Product } from '../../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
-import { NotificationComponent } from "../notification/notification.component";
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { LanguageValidationService } from '../../../services/language-validation.service';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, NotificationComponent,FormsModule],
+  imports: [CommonModule,  FormsModule],
   templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnInit {
+  @Output() productCreated = new EventEmitter<Product>();
+
+  isSaving = false;
   productData: PostProductDto = {
     CategoryId: 0,
     NameAr: '',
@@ -28,17 +32,18 @@ export class AddProductComponent implements OnInit {
     Price: 0,
     BrandId: 0,
     ImagesString64: [],
-    ProductStatus: 0
+    ProductStatus: 0,
   };
   message = '';
   isSuccess = true;
 
-  imagePreviews: string[] = []; 
+  imagePreviews: string[] = [];
   brands: LookUpDataModel<number>[] = [];
   Styles: LookUpDataModel<number>[] = [];
   Materials: LookUpDataModel<number>[] = [];
   Categories: LookUpDataModel<number>[] = [];
-
+  private toastrService = inject(ToastrService);
+  private languageValidatorService = inject(LanguageValidationService);
   @Output() closeForm = new EventEmitter<void>();
 
   constructor(private masterService: MasterService) {}
@@ -48,6 +53,8 @@ export class AddProductComponent implements OnInit {
     this.loadStyles();
     this.loadCategories();
     this.loadMaterials();
+    this.productData.BrandId =this.brands[0].value;
+
   }
 
   loadBrands(): void {
@@ -55,6 +62,7 @@ export class AddProductComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.brands = response.result;
+          this.productData.BrandId = this.brands[0].value; 
         } else {
           console.error('Failed to load brands:', response.message);
         }
@@ -70,6 +78,8 @@ export class AddProductComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.Materials = response.result;
+
+          this.productData.MaterialId = this.Materials[0].value;
         } else {
           console.error('Failed to load Materials:', response.message);
         }
@@ -85,6 +95,8 @@ export class AddProductComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.Categories = response.result;
+          this.productData.CategoryId = this.Categories[0].value;
+
         } else {
           console.error('Failed to load Categories:', response.message);
         }
@@ -100,6 +112,8 @@ export class AddProductComponent implements OnInit {
       (response) => {
         if (response.isSuccess) {
           this.Styles = response.result;
+          this.productData.StyleId = this.Styles[0].value;
+
         } else {
           console.error('Failed to load Styles:', response.message);
         }
@@ -113,40 +127,112 @@ export class AddProductComponent implements OnInit {
   onFileChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const files = target.files;
-  
+
     if (files) {
       Array.from(files).forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
-          const base64String = (reader.result as string).split(',')[1]; 
+          const base64String = (reader.result as string).split(',')[1];
           this.productData.ImagesString64.push(base64String);
-          this.imagePreviews.push(reader.result as string); 
+          this.imagePreviews.push(reader.result as string);
         };
-        reader.readAsDataURL(file); 
+        reader.readAsDataURL(file);
       });
     }
   }
-  
 
   submitProduct(): void {
-    this.masterService.postProduct(this.productData).subscribe(
-      (response) => {
+    if(this.productData.Weight){
+      if(this.productData.Weight < 1){
+        this.toastrService.error('Weight must be more than 1.', 'Validation Error', {
+          positionClass: 'toast-top-center',
+          progressBar: true,
+        });
+        return;
+      }
+    }
+    if(this.productData.Height){
+      if(this.productData.Height < 1){
+        this.toastrService.error('Height must be more than 1.', 'Validation Error', {
+          positionClass: 'toast-top-center',
+          progressBar: true,
+        });
+        return;
+      }
+    }
+
+    if(this.productData.Width){
+      if(this.productData.Width < 1){
+        this.toastrService.error('Width must be more than 1.', 'Validation Error', {
+          positionClass: 'toast-top-center',
+          progressBar: true,
+        });
+        return;
+      }
+    }
+
+
+    if (this.productData.Price <= 0) {
+      this.toastrService.error('Price must be greater than 0.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return; 
+    }
+    if(this.productData.Price > 1000000){
+      this.toastrService.error('Price must be less than 1000000.', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+    if(this.languageValidatorService.validateArabic(this.productData.NameAr) === false){
+      this.toastrService.error('Arabic Name must be in Arabic', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+    if(this.languageValidatorService.validateArabic(this.productData.DescriptionAr) === false){
+      this.toastrService.error('Arabic Description must be in Arabic', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+    if(this.languageValidatorService.validateEnglish(this.productData.NameEn) === false){
+      this.toastrService.error('English Name must be in English', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+    if(this.languageValidatorService.validateEnglish(this.productData.DescriptionEn) === false){
+      this.toastrService.error('English Description must be in English', 'Validation Error', {
+        positionClass: 'toast-top-center',
+        progressBar: true,
+      });
+      return;
+    }
+
+  
+    this.isSaving = true;
+    this.masterService.postProduct(this.productData).subscribe({
+      next: (response: any) => {
+        this.isSaving = false;
         if (response.isSuccess) {
-          console.log( 'Product Data:', this.productData);
-          this.message = 'Product added successfully!';
-          this.isSuccess = true;
+          this.productCreated.emit(response.result); 
         } else {
-          this.message = 'Failed to add product: ' + response.message;
-          this.isSuccess = false;
+          this.toastrService.error('Failed to add product: ' + response.message, 'Add Product');
         }
       },
-      (error) => {
-        this.message = 'Error occurred while adding product: ' + error;
-        this.isSuccess = false;
-      }
-    );
+      error: (error: any) => {
+        this.isSaving = false; 
+        this.toastrService.error('An error occurred while adding the product.', 'Add Product'); 
+      },
+    });
   }
-
+  
 
   close(): void {
     this.closeForm.emit();

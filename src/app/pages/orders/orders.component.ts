@@ -1,19 +1,22 @@
-import { ChangeDetectorRef, Component, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { MasterService } from '../../services/master.service';
+import { SignalrService } from '../../services/signalr.service';
 import { dictionaries, DictionariesEnum, Order } from '../../interfaces/interfaces';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AssgintoDriverComponent } from "../comp/assginto-driver/assginto-driver.component";
 import { OrderDitailsComponent } from "../comp/order-ditails/order-ditails.component";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [JsonPipe, CommonModule, FormsModule, AssgintoDriverComponent, OrderDitailsComponent],
+  imports: [CommonModule, FormsModule, AssgintoDriverComponent, OrderDitailsComponent],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   selectedOrder: Order | null = null; 
   errorMessage: string = '';
@@ -23,9 +26,49 @@ export class OrdersComponent implements OnInit {
   activeDropdown: number | null = null;
   dictionaries: any = dictionaries;
   DictionariesEnum: any = DictionariesEnum;
+  private readonly destroy$ = new Subject<void>(); // For managing subscriptions
 
-  constructor(private masterService: MasterService) {}
+  signalRService = inject(SignalrService);
+  masterService = inject(MasterService);
   cd = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    this.loadOrders();
+    this.signalRService.message$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((message) => {
+        if (message === 'Order') {
+          this.loadOrders();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(); // Signal all subscriptions to complete
+    this.destroy$.complete(); // Clean up the Subject
+  }
+
+  private loadOrders(): void {
+    this.masterService.getOrders()
+      .pipe(takeUntil(this.destroy$)) // Ensures the subscription is cleaned up
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess) {
+            this.orders = response.result;
+            this.sortOrders();
+            this.cd.detectChanges(); // Refresh the view
+          } else {
+            this.handleError(response.message || 'Failed to fetch orders.');
+          }
+        },
+        error: (err) => this.handleError('Error fetching orders: ' + err)
+      });
+  }
+
+  private handleError(message: string): void {
+    this.errorMessage = message;
+    console.error(message);
+  }
 
   handleDriverAssigned(orderId: number): void {
     const order = this.orders.find(o => o.orderId === orderId);
@@ -38,7 +81,7 @@ export class OrdersComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const target = event.target as HTMLElement;
-    if (!target.closest('.dropdown') ) {
+    if (!target.closest('.dropdown')) {
       this.closeDropdown();
     }
   }
@@ -82,7 +125,7 @@ export class OrdersComponent implements OnInit {
     this.activeDropdown = null;
   }
 
-  sortOrders(): void {
+  private sortOrders(): void {
     this.orders.sort((a, b) => {
       // Priority 1: NotShipped and has a transaction
       const aPriority1 = a.shippingStatus === 0 && a.transaction !== null;
@@ -101,22 +144,6 @@ export class OrdersComponent implements OnInit {
       if (a.status !== 1 && b.status === 1) return -1;
 
       return 0; // Equal priority
-    });
-  }
-
-  ngOnInit(): void {
-    this.masterService.getOrders().subscribe({
-      next: (response: any) => {
-        if (response.isSuccess) {
-          this.orders = response.result;
-          this.sortOrders(); 
-        } else {
-          this.errorMessage = response.message || 'Failed to fetch orders.';
-        }
-      },
-      error: (err: any) => {
-        this.errorMessage = 'Error fetching orders.';
-      }
     });
   }
 }

@@ -23,7 +23,6 @@ export class OrdersByStatusComponent implements OnInit {
           y: item.totalOrders,
           label: item.status
         }));
-        console.log('Orders by Status:', chartDataPoints);
         this.renderChart(chartDataPoints);
       } else {
         console.error('Failed to get Orders by Status: ' + response.message);

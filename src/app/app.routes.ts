@@ -12,7 +12,7 @@ import { UsersComponent } from './pages/users/users.component';
 export const routes: Routes = [
   {    
     path: '',
-    redirectTo: 'stats',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {    
@@ -54,5 +54,10 @@ export const routes: Routes = [
         canActivate: [authGuard]
       }
     ]
+    
+  },
+  {    
+    path: '**',
+    redirectTo: 'login'
   }
 ];

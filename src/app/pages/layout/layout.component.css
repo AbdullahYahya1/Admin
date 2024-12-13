@@ -32,9 +32,14 @@
   }
   .nav-link:hover {
     filter: grayscale(0%) opacity(1);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-  }
+    background: rgb(58, 58, 58);
+    color: rgb(255, 255, 255); /* Applies to the hovered link only */
+}
+
+.nav-link:hover svg path {
+    fill: rgb(0, 228, 0); /* Or set a specific static color */
+}
+
   .link-text {
     display: none;
     margin-left: 1rem;
@@ -71,6 +76,7 @@
   
   .navbar:hover .logo svg {
     transform: rotate(-180deg);
+    
   }
 
   

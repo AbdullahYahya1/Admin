@@ -1,10 +1,20 @@
+
+@if(this.showDriverForm){
+    <app-add-driver
+    (closeForm)="closeDriverForm()"
+    (driverAdded)="onDriverAdded($event)"
+    ></app-add-driver>
+}
 <h1>Users</h1>
 <div class="container">
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
   <!-- Drivers Table -->
   <div class="table-container">
-    <h2>Drivers</h2>
+    <div class="drivers-header">
+        <h2>Drivers</h2>
+        <button (click)="addNewDriver()" class="add-driver-button">Add New Driver</button>
+      </div>
     <table *ngIf="drivers.length > 0" class="custom-table">
       <thead>
         <tr>
@@ -42,8 +52,19 @@
 
   <!-- Normal Users Table -->
   <div class="table-container">
-    <h2>Clients</h2>
-    <table *ngIf="normalUsers.length > 0" class="custom-table">
+    <div class="clients-header">
+        <h2>Clients</h2>
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Search by User ID"
+            [(ngModel)]="searchTerm"
+            class="search-box"
+          />
+          <button (click)="onSearch()" class="search-button">Search</button>
+        </div>
+      </div>
+          <table *ngIf="normalUsers.length > 0" class="custom-table">
       <thead>
         <tr>
           <th>User ID</th>

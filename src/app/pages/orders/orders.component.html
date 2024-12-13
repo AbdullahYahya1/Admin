@@ -15,7 +15,7 @@
     <tr *ngFor="let order of orders">
       <td>{{ order.shippingAddress.city }}</td>
       <td>{{ order.createdAt | date }}</td>
-      <td>{{ order.totalPrice | currency }}</td>
+      <td>{{ order.totalPrice  }} SAR</td>
       <td >
         <div [ngClass]="order.transaction?.transactionStatus === 0 ? 'case-success' : 'case-danger'" class="cc center">
           {{ order.transaction == null 
@@ -34,7 +34,7 @@
           <button (click)="toggleDropdown(order.orderId)" class="dropdown-button">⋮</button>
           <div *ngIf="activeDropdown === order.orderId" class="dropdown-menu">
             <button (click)="displayOrderDetails(order)">Details</button>
-            <button *ngIf="order.status === 0 && order.shippingStatus === 0" (click)="assinToDriver(order.orderId)">Assign Order</button>
+            <button *ngIf="order.status === 0 && order.shippingStatus === 0 || order.status === 0 && order.shippingStatus === 4" (click)="assinToDriver(order.orderId)">Assign Order</button>
           </div>
         </div>
       </td>

@@ -1,14 +1,14 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { NotificationComponent } from '../notification/notification.component';
 import { FormsModule } from '@angular/forms';
 import { MasterService } from '../../../services/master.service';
 import { LookUpDataModel } from '../../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-assginto-driver',
   standalone: true,
-  imports: [NotificationComponent, FormsModule, CommonModule],
+  imports: [ FormsModule, CommonModule],
   templateUrl: './assginto-driver.component.html',
   styleUrl: './assginto-driver.component.css'
 })
@@ -22,14 +22,12 @@ export class AssgintoDriverComponent implements OnInit {
   errorMessage = ''; 
   driversLookup: LookUpDataModel<string>[] = []; 
   selectedDriverId: string | null = null; 
-  
+  private toastrService = inject(ToastrService);
   ngOnInit() {
-    console.log('Order ID:', this.orderId);
     this.masterService.getLookUp<string>('User/DriversUsersLookUp').subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
           this.driversLookup = response.result;
-          console.log('Drivers:', this.driversLookup);
         } else {
           this.errorMessage = response.message || 'Failed to load drivers.';
         }
@@ -43,27 +41,28 @@ export class AssgintoDriverComponent implements OnInit {
   }
 
   submitAssign() {
-    this.isSuccess = false;
     if (!this.selectedDriverId) {
-      this.message = 'Please select a driver.';
+      this.toastrService.warning('Please select a driver.', 'Assign Driver'); 
       return;
     }
-    this.masterService.AssignDriver(this.selectedDriverId ,this.orderId ).subscribe({
+    
+    this.masterService.AssignDriver(this.selectedDriverId, this.orderId).subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
-          this.isSuccess = true;
-          this.close();
+          this.toastrService.success('Driver assigned successfully!', 'Assign Driver'); 
+          this.closeForm.emit();
         } else {
-          this.message = 'Failed to assign driver: ' + response.message;
-          this.isSuccess = false;
+          const errorMessage = 'Failed to assign driver: ' + response.message;
+          this.toastrService.error(errorMessage, 'Assign Driver'); 
         }
       },
       error: (err: any) => {
-        this.message = 'Error occurred while assigning driver: ' + err;
-        this.isSuccess = false;
-      }
+        const errorMessage = 'Error occurred while assigning driver: ' + err;
+        this.toastrService.error(errorMessage, 'Assign Driver'); 
+      },
     });
   }
+
 
   close() {
     this.closeForm.emit();
