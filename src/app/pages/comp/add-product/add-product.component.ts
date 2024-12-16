@@ -53,7 +53,6 @@ export class AddProductComponent implements OnInit {
     this.loadStyles();
     this.loadCategories();
     this.loadMaterials();
-    this.productData.BrandId =this.brands[0].value;
 
   }
 
@@ -125,6 +124,8 @@ export class AddProductComponent implements OnInit {
   }
 
   onFileChange(event: Event): void {
+    this.imagePreviews = [];
+    this.productData.ImagesString64 = [];
     const target = event.target as HTMLInputElement;
     const files = target.files;
 
@@ -142,6 +143,7 @@ export class AddProductComponent implements OnInit {
   }
 
   submitProduct(): void {
+    console.log(this.productData);
     if(this.productData.Weight){
       if(this.productData.Weight < 1){
         this.toastrService.error('Weight must be more than 1.', 'Validation Error', {
@@ -217,7 +219,10 @@ export class AddProductComponent implements OnInit {
 
   
     this.isSaving = true;
+    console.log(this.productData);
+
     this.masterService.postProduct(this.productData).subscribe({
+
       next: (response: any) => {
         this.isSaving = false;
         if (response.isSuccess) {
@@ -227,6 +232,7 @@ export class AddProductComponent implements OnInit {
         }
       },
       error: (error: any) => {
+        console.error('Error occurred while adding the product:', error);
         this.isSaving = false; 
         this.toastrService.error('An error occurred while adding the product.', 'Add Product'); 
       },

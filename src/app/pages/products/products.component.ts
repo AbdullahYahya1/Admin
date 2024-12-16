@@ -294,6 +294,7 @@ dropdownOpen: any;
   }
   uploadNewImagesAndSave(updatedProductDto: PostProductDto): void {
     const uploadedImages: string[] = [];
+    updatedProductDto.ImagesString64 = updatedProductDto.ImagesString64.filter(item => item.startsWith("img"));
     this.newImages.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -421,8 +422,11 @@ dropdownOpen: any;
           this.pageNumber = 1;
           this.pageSize= 10;
           this.products = [];
+          this.searchTerm = '';
+          
           this.loadProducts();
           this.newImages = [];
+
           this.isSaving = false; 
           this.toastrService.success('Product updated successfully!', 'Update Product'); 
           this.close();

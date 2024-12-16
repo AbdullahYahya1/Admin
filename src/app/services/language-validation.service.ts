@@ -8,11 +8,12 @@ export class LanguageValidationService {
   constructor() { }
 
   validateArabic(sentence: string): boolean {
-    const arabicRegex = /^[\u0600-\u06FF\s.,?!؛،]*$/;
+    const arabicRegex = /^[\u0600-\u06FF\s.,?!؛،٠-٩0-9]*$/;
     return arabicRegex.test(sentence);
   }
+
   validateEnglish(sentence: string): boolean {
-    const englishRegex = /^[A-Za-z\s.,?!]*$/;
+    const englishRegex = /^[A-Za-z\s.,?!0-9]*$/;
     return englishRegex.test(sentence);
   }
 

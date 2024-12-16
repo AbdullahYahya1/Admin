@@ -57,6 +57,13 @@ button.valid {
     cursor: pointer;
     opacity: 1;
 }
+.note{
+  color: #7e7e7e;
+  font-size: 14px;
+  display: block;
+  margin: 4px;
+
+}
 
 button.valid:hover {
     background-color: #218838; /* Darker green on hover */

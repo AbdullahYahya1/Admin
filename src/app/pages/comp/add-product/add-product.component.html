@@ -109,6 +109,7 @@
           id="descriptionAr"
           [(ngModel)]="productData.DescriptionAr"
           name="descriptionAr"
+          required
         ></textarea>
       </div>
 
@@ -118,6 +119,7 @@
           id="descriptionEn"
           [(ngModel)]="productData.DescriptionEn"
           name="descriptionEn"
+          required
         ></textarea>
       </div>
 
@@ -158,12 +160,14 @@
       <!-- Image Upload Section -->
       <div>
         <label for="images">Upload Images:</label>
+        <span class="note">The first image becomes the cover page.</span>
+        
         <input
           type="file"
           id="images"
           (change)="onFileChange($event)"
           multiple
-          accept="image/*"
+          accept=".jpg, .jpeg, .png"
         />
       </div>
 

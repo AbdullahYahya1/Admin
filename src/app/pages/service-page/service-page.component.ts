@@ -66,10 +66,10 @@ export class ServicePageComponent {
     this.masterService.ResponseToRequest(Number(this.serviceId), requestData).subscribe({
       next: (response: any) => {
         if (response.isSuccess) {
-          this.toastrService.success('Response submitted successfully!', 'Submit Response'); // Show success toast
-          this.router.navigate(['/services']); // Navigate after success
+          this.toastrService.success('Response submitted successfully!', 'Submit Response'); 
+          this.router.navigate(['/services']);
         } else {
-          this.toastrService.error('Failed to submit response: ' + response.message, 'Submit Response'); // Show error toast
+          this.toastrService.error('Failed to submit response: ' + response.message, 'Submit Response');
           console.error('Failed to submit response:', response.message);
         }
       },

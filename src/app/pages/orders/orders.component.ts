@@ -44,13 +44,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(); // Signal all subscriptions to complete
-    this.destroy$.complete(); // Clean up the Subject
+    this.destroy$.next(); 
+    this.destroy$.complete(); 
   }
 
   private loadOrders(): void {
     this.masterService.getOrders()
-      .pipe(takeUntil(this.destroy$)) // Ensures the subscription is cleaned up
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response.isSuccess) {

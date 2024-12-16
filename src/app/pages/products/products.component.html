@@ -155,7 +155,7 @@
                 <img [src]="Url + '/' + img.imageUrl" alt="Product Image" />
                 <button type="button" class="remove-image" (click)="removeImage(img)">X</button>
               </div>
-              <input type="file" id="images" (change)="onImageSelected($event)" multiple accept="image/*">
+              <input type="file" id="images" (change)="onImageSelected($event)" multiple accept=".jpg, .jpeg, .png">
             </div>
         </div>
         <div class="buttonContainer">
