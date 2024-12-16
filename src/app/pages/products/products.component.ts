@@ -232,8 +232,10 @@ dropdownOpen: any;
     this.ShowForm = true;
   }
   onImageSelected(event: Event): void {
+
     const input = event.target as HTMLInputElement;
     if (input.files) {
+      this.newImages = [];
       Array.from(input.files).forEach(file => {
         this.newImages.push(file); 
       });
@@ -294,7 +296,7 @@ dropdownOpen: any;
   }
   uploadNewImagesAndSave(updatedProductDto: PostProductDto): void {
     const uploadedImages: string[] = [];
-    updatedProductDto.ImagesString64 = updatedProductDto.ImagesString64.filter(item => item.startsWith("img"));
+    updatedProductDto.ImagesString64 = updatedProductDto.ImagesString64.filter(item => item.startsWith("images"));
     this.newImages.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -302,6 +304,7 @@ dropdownOpen: any;
         uploadedImages.push(base64String);
         if (uploadedImages.length === this.newImages.length) {
           updatedProductDto.ImagesString64 = [...updatedProductDto.ImagesString64, ...uploadedImages];
+          console.log(updatedProductDto);
           this.updateProduct(updatedProductDto);
         }
       };

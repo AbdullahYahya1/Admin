@@ -13,18 +13,18 @@
   </thead>
   <tbody>
     <tr *ngFor="let order of orders">
-      <td>{{ order.shippingAddress.city }}</td>
-      <td>{{ order.createdAt | date }}</td>
-      <td>{{ order.totalPrice  }} SAR</td>
-      <td >
+      <td data-label="Shipping Address">{{ order.shippingAddress.city }}</td>
+      <td data-label="Order Date">{{ order.createdAt | date }}</td>
+      <td data-label="Total Amount">{{ order.totalPrice  }} SAR</td>
+      <td data-label="Transaction Status">
         <div [ngClass]="order.transaction?.transactionStatus === 0 ? 'case-success' : 'case-danger'" class="cc center">
           {{ order.transaction == null 
             ? 'Not Payed' 
             : dictionaries.TransactionStatus[order.transaction.transactionStatus]?.en }}
         </div>
       </td> 
-      <td>{{ dictionaries.ShippingStatus[order.shippingStatus].en }}</td>
-      <td >
+      <td data-label="Shipping Status">{{ dictionaries.ShippingStatus[order.shippingStatus].en }}</td>
+      <td data-label="Status">
         <div [ngClass]="getStatusClass(order.status)" class="cc center">
           {{ dictionaries.OrderStatus[order.status].en }}
         </div>
@@ -50,5 +50,4 @@
   (closeForm)="toggleAssgintoDriverProduct()" 
   (orderAssigned)="handleDriverAssigned($event)">
 </app-assginto-driver>
-
 </div>

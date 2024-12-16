@@ -31,6 +31,8 @@
     background-color:var(--container-dark); 
     margin: 0;
     padding: 0;
+    padding-bottom: 20px;
+
   }
   *::-webkit-scrollbar {
     width: 0.25rem;
@@ -97,4 +99,11 @@ button.valid:hover {
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   position: fixed !important;
+}
+
+/*  add midea for small imgs */
+@media (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
 }
